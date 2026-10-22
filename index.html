@@ -130,8 +130,7 @@ h1.title{animation:none}
   .track{position:absolute;top:0;height:100%;border-radius:28px}
   .cells{position:relative;grid-template-columns:repeat(2,1fr);grid-auto-rows:54px}
   .cell:nth-child(2n){border-inline-start:1px solid rgb(255 255 255 / .12)}
-  .cell:nth-child(-n+4){border-bottom:1px solid rgb(255 255 255 / .12)}
-  .cell:last-child{grid-column:1/-1}
+  .cell:nth-child(-n+2){border-bottom:1px solid rgb(255 255 255 / .12)}
   .cell{border-radius:0;font-size:15px}
   .capsule{display:none}
   .cell:active{background:rgb(255 255 255 / .08)}
@@ -166,7 +165,47 @@ h3{margin:0;font-size:17px;font-weight:600;color:var(--silk);line-height:1.5}
 .ach-item div{display:flex;flex-direction:column;gap:4px;min-width:0}
 .yr{font-size:12px;color:#cdbf9f;font-variant-numeric:tabular-nums}
 
-.events{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.tl{list-style:none;margin:0;padding:10px 0;position:relative;display:flex;flex-direction:column;gap:34px}
+.tl::before{content:"";position:absolute;top:0;bottom:0;left:50%;width:2px;transform:translateX(-50%);background:linear-gradient(180deg,transparent,rgba(255,248,225,.6) 8%,rgba(255,248,225,.6) 92%,transparent)}
+.tl-item{position:relative;display:grid;grid-template-columns:minmax(0,1fr) 64px minmax(0,1fr);align-items:center}
+.tl-dot{grid-column:2;grid-row:1;justify-self:center;position:relative;z-index:1;width:56px;height:56px;border-radius:50%;display:grid;place-items:center;border:4px solid transparent;
+  background:linear-gradient(var(--olive-deep),var(--olive-deep)) padding-box,linear-gradient(160deg,#fffdf6,#efe6d2 55%,#d9cba6) border-box;box-shadow:0 0 0 6px rgba(47,54,32,.55),0 10px 24px -8px rgba(244,234,204,.45)}
+.tl-dot i{width:22px;height:22px;color:#fff}
+.tl-card{grid-row:1;grid-column:1;position:relative;min-width:0;padding:20px 24px;border-radius:22px;margin-inline-end:18px}
+.tl-item:nth-of-type(even) .tl-card{grid-column:3;margin-inline-end:0;margin-inline-start:18px}
+.tl-card::after{content:"";position:absolute;top:50%;width:18px;height:2px;background:rgba(255,248,225,.5);inset-inline-end:-18px}
+.tl-item:nth-of-type(even) .tl-card::after{inset-inline-end:auto;inset-inline-start:-18px}
+.tl-year{grid-row:1;grid-column:3;justify-self:start;margin-inline-start:22px;font-family:var(--font-display);font-weight:700;font-size:clamp(34px,5vw,56px);line-height:1;color:transparent;-webkit-text-stroke:1.2px rgba(239,230,210,.55);font-variant-numeric:tabular-nums}
+.tl-item:nth-of-type(even) .tl-year{grid-column:1;justify-self:end;margin-inline-start:0;margin-inline-end:22px}
+.tl-date{display:inline-block;font-size:13px;font-weight:600;letter-spacing:.04em;color:var(--olive-deep);background:linear-gradient(160deg,#fffdf6,#efe6d2 55%,#d9cba6);padding:4px 14px;border-radius:999px;font-variant-numeric:tabular-nums}
+.tl-card h3{margin:12px 0 8px;font-size:19px}
+.tl-card p{margin:0;font-size:14.5px;line-height:1.95;color:var(--silk-dim)}
+.tl-card p+p{margin-top:10px}
+.tag-h{color:#e8d9a6;unicode-bidi:isolate}
+.tl-item.now .tl-dot{box-shadow:0 0 0 6px rgba(47,54,32,.55),0 0 34px 8px rgba(244,234,204,.4)}
+.tl-item.now .tl-card{border:1px solid rgba(255,248,225,.38)}
+.tl-item.now .tl-year{-webkit-text-stroke:0;color:#efe6d2;text-shadow:0 0 24px rgba(244,234,204,.35)}
+.tl{gap:84px !important;padding:60px 0 !important}
+.tl::before{display:none !important}
+.tl-rib{position:absolute;inset:0;width:100%;height:100%;overflow:visible;pointer-events:none;z-index:0}
+.tl-rib .r-base{fill:none;stroke:url(#ribGrad);stroke-linecap:round}
+.tl-rib .r-edge{fill:none;stroke:rgba(20,24,12,.35);stroke-linecap:round}
+.tl-rib .r-hi{fill:none;stroke:rgba(255,252,240,.55);stroke-linecap:round}
+.tl-rib .r-flow{fill:none;stroke:rgba(255,248,225,.9);stroke-linecap:round;stroke-dasharray:2 70;animation:ribflow 4s linear infinite;filter:drop-shadow(0 0 4px rgba(255,244,210,.9))}
+@keyframes ribflow{to{stroke-dashoffset:-72}}
+.tl-item{z-index:1}
+.tl-card{background:rgba(38,44,24,.55) !important}
+@media (prefers-reduced-motion:reduce){.tl-rib .r-flow{display:none}}
+@media (max-width:760px){
+  .tl::before{left:auto;right:27px;transform:none}
+  .tl-item{grid-template-columns:56px minmax(0,1fr);column-gap:16px;align-items:start}
+  .tl-dot{grid-column:1}
+  .tl-card,.tl-item:nth-of-type(even) .tl-card{grid-column:2;grid-row:2;margin:0}
+  .tl-card::after{display:none}
+  .tl-year,.tl-item:nth-of-type(even) .tl-year{grid-column:2;grid-row:1;justify-self:start;align-self:center;margin:0 0 10px;font-size:34px}
+  .tl-dot{width:52px;height:52px}
+}
+
 .ev{display:flex;gap:16px;padding:20px;border-radius:22px;min-width:0}
 .date{flex:none;width:64px;height:72px;border-radius:16px;background:var(--silk);color:var(--olive-deep);display:flex;flex-direction:column;align-items:center;justify-content:center;line-height:1.1}
 .date b{font-family:var(--font-display);font-size:26px;font-variant-numeric:tabular-nums}
@@ -264,12 +303,12 @@ a:focus-visible{outline:2px solid var(--silk);outline-offset:3px;border-radius:6
   .f-bottom{flex-direction:row;gap:16px}
 }
 @media (max-width:980px){
-  .events,.comms{grid-template-columns:repeat(2,1fr)}
+  .comms{grid-template-columns:repeat(2,1fr)}
   .goal-list{grid-template-columns:1fr 1fr}
 }
 @media (max-width:760px){ .nav{display:none} }
 @media (max-width:620px){
-  .vmg,.ach,.events,.comms{grid-template-columns:1fr}
+  .vmg,.comms{grid-template-columns:1fr}
   .goal-list{grid-template-columns:1fr}
 }
 @media (max-width:440px){ .f-links{grid-template-columns:1fr 1fr} }
@@ -317,7 +356,6 @@ a:focus-visible{outline:2px solid var(--silk);outline-offset:3px;border-radius:6
           <button class="cell" type="button" data-target="vision"><i data-i="target"></i><span>رؤيتنا</span></button>
           <button class="cell" type="button" data-target="structure"><i data-i="network"></i><span>الهيكلة</span></button>
           <button class="cell" type="button" data-target="achievements"><i data-i="trophy"></i><span>الإنجازات</span></button>
-          <button class="cell" type="button" data-target="events"><i data-i="calendar"></i><span>الفعاليات</span></button>
           <button class="cell" type="button" data-target="committees"><i data-i="users"></i><span>اللجان</span></button>
         </div>
       </div>
@@ -368,37 +406,36 @@ a:focus-visible{outline:2px solid var(--silk);outline-offset:3px;border-radius:6
     <!-- achievements -->
     <section class="sec" id="achievements">
       <div class="sec-head"><span class="eyebrow">مسيرتنا</span><h2>إنجازات النادي</h2></div>
-      <div class="ach">
-        <article class="ach-item liquid-glass"><i data-i="megaphone"></i><div><span class="yr">2026</span><h3>إطلاق حملة #همة_تبحث_عن_قادة</h3><p>حملة استقطاب في الكليات لاكتشاف القادة الجدد وضمهم للنادي.</p></div></article>
-        <article class="ach-item liquid-glass"><i data-i="cap"></i><div><span class="yr">2026</span><h3>سلسلة ورش القيادة</h3><p>ورش تطبيقية في الإلقاء واتخاذ القرار وإدارة الفرق.</p></div></article>
-        <article class="ach-item liquid-glass"><i data-i="heart"></i><div><span class="yr">2025</span><h3>مبادرات تطوعية</h3><p>مبادرات مجتمعية نفّذها أعضاء النادي داخل الجامعة وخارجها.</p></div></article>
-        <article class="ach-item liquid-glass"><i data-i="award"></i><div><span class="yr">2025</span><h3>تأسيس نادي همة</h3><p>انطلاق النادي وتشكيل فريقه ولجانه الأولى.</p></div></article>
-      </div>
-    </section>
-
-    <!-- upcoming events -->
-    <section class="sec" id="events">
-      <div class="sec-head"><span class="eyebrow">قريباً</span><h2>الفعاليات القادمة</h2></div>
-      <div class="events">
-        <article class="ev liquid-glass">
-          <div class="date"><b>28</b><span>أكتوبر</span></div>
-          <div class="ev-body"><h3>اللقاء التعريفي بنادي همة</h3>
-            <p class="meta"><i data-i="clock"></i>7:00 مساءً &nbsp;&nbsp;<i data-i="pin"></i>المسرح الرئيسي</p>
-            <a class="ev-link" href="#join">سجّل حضورك</a></div>
-        </article>
-        <article class="ev liquid-glass">
-          <div class="date"><b>05</b><span>نوفمبر</span></div>
-          <div class="ev-body"><h3>ورشة: القيادة تبدأ من الذات</h3>
-            <p class="meta"><i data-i="clock"></i>6:30 مساءً &nbsp;&nbsp;<i data-i="pin"></i>قاعة التدريب</p>
-            <a class="ev-link" href="#join">سجّل حضورك</a></div>
-        </article>
-        <article class="ev liquid-glass">
-          <div class="date"><b>19</b><span>نوفمبر</span></div>
-          <div class="ev-body"><h3>ملتقى قادة همة</h3>
-            <p class="meta"><i data-i="clock"></i>5:00 مساءً &nbsp;&nbsp;<i data-i="pin"></i>بهو الكلية</p>
-            <a class="ev-link" href="#join">سجّل حضورك</a></div>
-        </article>
-      </div>
+      <ol class="tl">
+        <li class="tl-item">
+          <span class="tl-year" aria-hidden="true">2017</span>
+          <span class="tl-dot" aria-hidden="true"><i data-i="award"></i></span>
+          <article class="tl-card liquid-glass">
+            <span class="tl-date">2017م</span>
+            <h3>تأسيس النادي</h3>
+            <p>تأسيس النادي من قبل عمادة شؤون الطلاب، وانطلاق مسيرته في خدمة الطلبة ودعم الأنشطة والمبادرات الطلابية.</p>
+          </article>
+        </li>
+        <li class="tl-item">
+          <span class="tl-year" aria-hidden="true">2026</span>
+          <span class="tl-dot" aria-hidden="true"><i data-i="globe"></i></span>
+          <article class="tl-card liquid-glass">
+            <span class="tl-date">2026م</span>
+            <h3>إطلاق الموقع الإلكتروني</h3>
+            <p>إنشاء الموقع الإلكتروني الرسمي للنادي، بهدف تعزيز الحضور الرقمي، وتسهيل الوصول إلى أخبار النادي وفعالياته ومبادراته.</p>
+          </article>
+        </li>
+        <li class="tl-item now">
+          <span class="tl-year" aria-hidden="true">2026</span>
+          <span class="tl-dot" aria-hidden="true"><i data-i="megaphone"></i></span>
+          <article class="tl-card liquid-glass">
+            <span class="tl-date">9 / 2026م</span>
+            <h3>إطلاق مبادرة <span dir="rtl" class="tag-h">#همة_تبحث_عن_قائد_2026</span></h3>
+            <p>إطلاق مبادرة «همة تبحث عن قائد» لاستقطاب الطلبة الطموحين واكتشاف المواهب والقيادات الواعدة، من خلال إتاحة الفرصة لهم للانضمام إلى النادي والمشاركة في صناعة المبادرات والبرامج والفعاليات.</p>
+            <p>وتهدف المبادرة إلى تمكين الطلبة، وتنمية مهارات القيادة والعمل الجماعي، وتعزيز روح المبادرة والمسؤولية، بما يسهم في بناء جيل من القادة القادرين على صناعة الأثر وقيادة مستقبل النادي.</p>
+          </article>
+        </li>
+      </ol>
     </section>
 
     <!-- committees -->
@@ -425,7 +462,7 @@ a:focus-visible{outline:2px solid var(--silk);outline-offset:3px;border-radius:6
         <div class="f-side">
           <div class="f-links">
           <div><h4>اكتشف</h4><ul>
-            <li><a href="#vision">الرؤية والرسالة</a></li><li><a href="#achievements">الإنجازات</a></li><li><a href="#events">الفعاليات القادمة</a></li><li><a href="#committees">اللجان</a></li></ul></div>
+            <li><a href="#vision">الرؤية والرسالة</a></li><li><a href="#achievements">الإنجازات</a></li><li><a href="#committees">اللجان</a></li></ul></div>
           <div><h4>الرسالة</h4><ul>
             <li><a href="#vision">الهدف</a></li><li><a href="#structure">الهيكل التنظيمي</a></li><li><a href="join.html">انضم للفريق</a></li></ul></div>
           <div><h4>تواصل</h4><ul>
@@ -464,6 +501,7 @@ a:focus-visible{outline:2px solid var(--silk);outline-offset:3px;border-radius:6
    bulb:'<path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5"/><path d="M9 18h6M10 22h4"/>',
    palette:'<circle cx="13.5" cy="6.5" r="1"/><circle cx="17.5" cy="10.5" r="1"/><circle cx="8.5" cy="7.5" r="1"/><circle cx="6.5" cy="12.5" r="1"/><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.93 0 1.65-.75 1.65-1.69 0-.44-.18-.84-.44-1.13-.29-.29-.44-.65-.44-1.13a1.64 1.64 0 0 1 1.67-1.67h2c3.05 0 5.56-2.5 5.56-5.55C21.97 6.01 17.46 2 12 2z"/>',
    compass:'<circle cx="12" cy="12" r="10"/><path d="m16.24 7.76-2.12 6.36-6.36 2.12 2.12-6.36 6.36-2.12z"/>',
+   globe:'<circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>',
    star:'<path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01Z"/>'
   };
   document.querySelectorAll('[data-i]').forEach(el=>{el.setAttribute('aria-hidden','true');el.innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">'+(P[el.dataset.i]||'')+'</svg>'});
@@ -618,6 +656,35 @@ a:focus-visible{outline:2px solid var(--silk);outline-offset:3px;border-radius:6
   addEventListener('resize',later);
   if(document.fonts&&document.fonts.ready)document.fonts.ready.then(draw);
   setTimeout(draw,50);setTimeout(draw,1200);
+})();
+
+/* achievements ribbon */
+(function(){
+  var tl=document.querySelector('.tl'); if(!tl) return;
+  var NS='http://www.w3.org/2000/svg';
+  var svg=document.createElementNS(NS,'svg'); svg.setAttribute('class','tl-rib'); svg.setAttribute('aria-hidden','true');
+  svg.innerHTML='<defs><linearGradient id="ribGrad" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fffbea" stop-opacity=".55"/><stop offset=".35" stop-color="#d9cba6" stop-opacity=".38"/><stop offset=".6" stop-color="#fff6dc" stop-opacity=".6"/><stop offset="1" stop-color="#c9bb93" stop-opacity=".35"/></linearGradient></defs><path class="r-edge"/><path class="r-base"/><path class="r-hi"/><path class="r-flow"/>';
+  tl.insertBefore(svg,tl.firstChild);
+  var ps=svg.querySelectorAll('path');
+  function draw(){
+    var o=tl.getBoundingClientRect(), W=o.width, H=o.height;
+    svg.setAttribute('viewBox','0 0 '+W+' '+H);
+    var dots=[].slice.call(tl.querySelectorAll('.tl-dot')).map(function(d){var r=d.getBoundingClientRect();return {x:r.left-o.left+r.width/2,y:r.top-o.top+r.height/2}});
+    if(!dots.length) return;
+    var narrow=W<700, amp=narrow?Math.min(26,W*.08):W*.30, sw=narrow?18:46;
+    var p=dots[0], d='M'+(p.x+(narrow?0:amp*.9))+' 0 C'+(p.x+(narrow?amp:amp*.9))+' '+(p.y*.45)+' '+(p.x+(narrow?amp:amp*.4))+' '+(p.y*.8)+' '+p.x+' '+p.y;
+    for(var i=1;i<dots.length;i++){
+      var a=dots[i-1],b=dots[i],dy=b.y-a.y,side=(i%2?-1:1);
+      d+=' C'+(a.x+side*amp)+' '+(a.y+dy*.3)+' '+(b.x+side*amp)+' '+(b.y-dy*.3)+' '+b.x+' '+b.y;
+    }
+    var z=dots[dots.length-1], s2=(dots.length%2?-1:1);
+    d+=' C'+(z.x+s2*amp*.5)+' '+(z.y+(H-z.y)*.5)+' '+(z.x+s2*amp*1.1)+' '+(H-10)+' '+(z.x+s2*amp*1.3)+' '+(H+20);
+    ps.forEach(function(e){e.setAttribute('d',d)});
+    ps[0].setAttribute('stroke-width',sw+6); ps[1].setAttribute('stroke-width',sw); ps[2].setAttribute('stroke-width',Math.max(2,sw*.12)); ps[3].setAttribute('stroke-width',narrow?3:4);
+  }
+  var t;addEventListener('resize',function(){clearTimeout(t);t=setTimeout(draw,80)});
+  if(document.fonts&&document.fonts.ready)document.fonts.ready.then(draw);
+  setTimeout(draw,60);setTimeout(draw,1200);
 })();
 </script>
 
