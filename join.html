@@ -296,18 +296,37 @@ blockquote{position:relative;margin:18px 0 0;font-family:var(--font-display);fon
     document.getElementById('subject').value='طلب انضمام جديد ('+role+') - '+nm;
     var fd=new FormData(form);
     btn.disabled=true;btn.firstChild.textContent='جاري الإرسال… ';
-    fetch('https://api.web3forms.com/submit',{method:'POST',body:fd,headers:{'Accept':'application/json'}})
-      .then(function(r){return r.json().then(function(j){return {ok:r.ok&&j.success,j:j}})})
+    var first=nm.split(' ')[0];
+    try{sessionStorage.setItem('himmaName',first)}catch(_){}
+    var ctl=('AbortController' in window)?new AbortController():null, timer=setTimeout(function(){ctl&&ctl.abort()},20000);
+    fetch('https://api.web3forms.com/submit',{method:'POST',body:fd,headers:{'Accept':'application/json'},signal:ctl?ctl.signal:undefined})
+      .then(function(r){clearTimeout(timer);return r.text().then(function(t){var j=null;try{j=JSON.parse(t)}catch(_){}return {status:r.status,j:j}})})
       .then(function(res){
-        if(!res.ok)throw new Error(res.j&&res.j.message||'');
-        card.innerHTML='<div class="done"><div class="tick"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></div><h2>وصلنا طلبك</h2><p>شكراً '+nm.split(' ')[0].replace(/[<>&"]/g,'')+'، استلمنا طلبك وبنتواصل معك على جوالك أو إيميلك قريباً.</p><a href="index.html">الرجوع للموقع</a></div>';
-        card.scrollIntoView({behavior:'smooth',block:'center'});
+        if(res.j&&res.j.success){showDone(first);return}
+        if(res.j&&res.j.message&&res.status>=400&&res.status<500&&res.status!==403&&res.status!==429){
+          btn.disabled=false;btn.firstChild.textContent='إرسال الطلب ';
+          msg.className='msg err';msg.textContent='ما انرسل الطلب: '+res.j.message;return;
+        }
+        nativeSubmit();
       })
-      .catch(function(){
-        btn.disabled=false;btn.firstChild.textContent='إرسال الطلب ';
-        msg.className='msg err';msg.textContent='ما قدرنا نرسل الطلب. تأكد من اتصالك بالإنترنت وجرّب مرة ثانية.';
-      });
+      .catch(function(){clearTimeout(timer);nativeSubmit()});
   });
+  function showDone(first){
+    card.innerHTML='<div class="done"><div class="tick"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></div><h2>وصلنا طلبك</h2><p>شكراً'+(first?' '+String(first).replace(/[<>&"]/g,''):'')+'، استلمنا طلبك وبنتواصل معك على جوالك أو إيميلك قريباً.</p><a href="index.html">الرجوع للموقع</a></div>';
+    card.scrollIntoView({behavior:'smooth',block:'center'});
+  }
+  // fallback: a normal page POST is not blocked the way a background request can be
+  function nativeSubmit(){
+    msg.className='msg';msg.textContent='لحظة، نكمل الإرسال بطريقة ثانية…';
+    var r=document.createElement('input');r.type='hidden';r.name='redirect';
+    r.value=location.origin+location.pathname+'?sent=1#apply';form.appendChild(r);
+    form.action='https://api.web3forms.com/submit';form.method='POST';form.setAttribute('accept-charset','UTF-8');
+    HTMLFormElement.prototype.submit.call(form);
+  }
+  if(/[?&]sent=1/.test(location.search)){
+    var n='';try{n=sessionStorage.getItem('himmaName')||''}catch(_){}
+    showDone(n);
+  }
 })();
 </script>
 </body>
