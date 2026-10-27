@@ -197,10 +197,10 @@ blockquote{position:relative;margin:18px 0 0;font-family:var(--font-display);fon
   <h2 class="sh center apply-h" id="apply">قدّم الآن</h2>
   <section class="card" id="card">
   <form id="applyForm" novalidate>
-    <input type="hidden" name="access_key" value="822944c2-59c6-4b6a-8eeb-d5eb901702e4">
-    <input type="hidden" name="subject" id="subject" value="طلب انضمام جديد - نادي همة">
-    <input type="hidden" name="from_name" value="موقع نادي همة">
-    <div class="hp" aria-hidden="true"><label>لا تعبّئ هذا الحقل<input type="checkbox" name="botcheck" tabindex="-1"></label></div>
+    <input type="hidden" name="_template" value="table"><input type="hidden" name="_captcha" value="false">
+    <input type="hidden" name="_subject" id="subject" value="طلب انضمام جديد - نادي همة">
+    
+    <div class="hp" aria-hidden="true"><label>لا تعبّئ هذا الحقل<input type="text" name="_honey" tabindex="-1" autocomplete="off"></label></div>
 
     <fieldset>
       <legend><span class="n">1</span>البيانات الشخصية</legend>
@@ -279,6 +279,9 @@ blockquote{position:relative;margin:18px 0 0;font-family:var(--font-display);fon
 </main>
 <script>
 (function(){
+  // requests go to the club inbox through FormSubmit
+  var INBOX='himmakfu@gmail.com';
+  var ENDPOINT_AJAX='https://formsubmit.co/ajax/'+INBOX, ENDPOINT_FORM='https://formsubmit.co/'+INBOX;
   var form=document.getElementById('applyForm'),btn=document.getElementById('submitBtn'),msg=document.getElementById('msg'),card=document.getElementById('card');
   var w14=document.getElementById('q14wrap');
   form.querySelectorAll('input[name="13. هل لديك خبرات سابقة في العمل الطلابي أو التطوعي؟"]').forEach(function(r){r.addEventListener('change',function(){w14.hidden=r.value!=='نعم'||!r.checked;if(w14.hidden)document.getElementById('q14').value=''})});
@@ -299,10 +302,10 @@ blockquote{position:relative;margin:18px 0 0;font-family:var(--font-display);fon
     var first=nm.split(' ')[0];
     try{sessionStorage.setItem('himmaName',first)}catch(_){}
     var ctl=('AbortController' in window)?new AbortController():null, timer=setTimeout(function(){ctl&&ctl.abort()},20000);
-    fetch('https://api.web3forms.com/submit',{method:'POST',body:fd,headers:{'Accept':'application/json'},signal:ctl?ctl.signal:undefined})
+    fetch(ENDPOINT_AJAX,{method:'POST',body:fd,headers:{'Accept':'application/json'},signal:ctl?ctl.signal:undefined})
       .then(function(r){clearTimeout(timer);return r.text().then(function(t){var j=null;try{j=JSON.parse(t)}catch(_){}return {status:r.status,j:j}})})
       .then(function(res){
-        if(res.j&&res.j.success){showDone(first);return}
+        if(res.j&&(res.j.success===true||res.j.success==='true')){showDone(first);return}
         if(res.j&&res.j.message&&res.status>=400&&res.status<500&&res.status!==403&&res.status!==429){
           btn.disabled=false;btn.firstChild.textContent='إرسال الطلب ';
           msg.className='msg err';msg.textContent='ما انرسل الطلب: '+res.j.message;return;
@@ -318,9 +321,9 @@ blockquote{position:relative;margin:18px 0 0;font-family:var(--font-display);fon
   // fallback: a normal page POST is not blocked the way a background request can be
   function nativeSubmit(){
     msg.className='msg';msg.textContent='لحظة، نكمل الإرسال بطريقة ثانية…';
-    var r=document.createElement('input');r.type='hidden';r.name='redirect';
+    var r=document.createElement('input');r.type='hidden';r.name='_next';
     r.value=location.origin+location.pathname+'?sent=1#apply';form.appendChild(r);
-    form.action='https://api.web3forms.com/submit';form.method='POST';form.setAttribute('accept-charset','UTF-8');
+    form.action=ENDPOINT_FORM;form.method='POST';form.setAttribute('accept-charset','UTF-8');
     HTMLFormElement.prototype.submit.call(form);
   }
   if(/[?&]sent=1/.test(location.search)){
