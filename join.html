@@ -47,6 +47,8 @@ legend .n{width:30px;height:30px;border-radius:50%;display:grid;place-items:cent
 label,.lbl{font-size:14px;font-weight:500;color:#fff}
 .req{color:#e8d9a6;margin-inline-start:3px}
 .hint{font-size:12px;color:var(--silk-dim)}
+.cq{grid-column:1/-1;display:grid;gap:16px;padding:18px;border-radius:18px;border:1px solid var(--line);background:rgba(255,255,255,.04)}.cq[hidden]{display:none}.cq h4{margin:0;display:flex;align-items:center;gap:10px;font-family:var(--font-display);font-size:18px;color:#fff}.cq h4 small{font:600 11px/1 var(--font-sans);padding:5px 10px;border-radius:999px;background:#e2c47c;color:#2f3620}.cq-empty{grid-column:1/-1;margin:0}.cq-empty[hidden]{display:none}
+
 input[type=text],input[type=email],input[type=tel],input[type=number],input[type=url],select,textarea{width:100%;font:400 15px/1.5 var(--font-sans);color:#fff;padding:12px 14px;border-radius:14px;
   background:rgba(20,24,12,.28);border:1px solid var(--line);outline:none;transition:border-color .2s,background .2s,box-shadow .2s}
 textarea{min-height:110px;resize:vertical}
@@ -252,22 +254,27 @@ blockquote{position:relative;margin:18px 0 0;font-family:var(--font-display);fon
     <fieldset>
       <legend><span class="n">3</span>مواقف قيادية</legend>
       <div class="f full"><label for="q10">تخيل أنك تقود فريقاً من 5 أعضاء واعتذر اثنان منهم عن الحضور قبل الفعالية بساعتين، ما هي أول 3 خطوات ستتخذها للسيطرة على الموقف؟<span class="req">*</span></label><textarea id="q10" name="10. تخيل أنك تقود فريقاً من 5 أعضاء واعتذر اثنان منهم عن الحضور قبل الفعالية بساعتين، ما هي أول 3 خطوات ستتخذها للسيطرة على الموقف؟" required></textarea></div>
-      <div class="f full"><label for="q11">لو خُيّرت بين إنجاز مهمة بنسبة إتقان 100% ولكن بعد الموعد النهائي بـ 24 ساعة، أو تسليمها بنسبة إتقان 80% في الموعد المحدد بالضبط، ماذا تختار ولماذا؟<span class="req">*</span></label><textarea id="q11" name="11. لو خُيّرت بين إنجاز مهمة بنسبة إتقان 100% ولكن بعد الموعد النهائي بـ 24 ساعة، أو تسليمها بنسبة إتقان 80% في الموعد المحدد بالضبط، ماذا تختار ولماذا؟" required></textarea></div>
-      <div class="f full"><label for="q12">لو طُلب منك إنجاز مهمة عاجلة تخص فعاليات النادي خلال فترة الاختبارات أو ضغط الدراسة، كيف ستتعامل مع الموقف؟<span class="req">*</span></label><textarea id="q12" name="12. لو طُلب منك إنجاز مهمة عاجلة تخص فعاليات النادي خلال فترة الاختبارات أو ضغط الدراسة، كيف ستتعامل مع الموقف؟" required></textarea></div>
+    </fieldset>
+
+    <fieldset id="cqSet">
+      <legend><span class="n">4</span>أسئلة اللجان</legend>
+      <p class="hint cq-empty" id="cqEmpty">اختر لجنتك في الرغبة الأولى والثانية، وبتظهر لك هنا أسئلة كل لجنة.</p>
+      <div class="cq" id="cq1" hidden></div>
+      <div class="cq" id="cq2" hidden></div>
     </fieldset>
 
     <fieldset>
-      <legend><span class="n">4</span>الخبرات والمهارات العامة</legend>
+      <legend><span class="n">5</span>الخبرات والمهارات العامة</legend>
       <div class="f full">
         <span class="lbl" id="expLbl">هل لديك خبرات سابقة في العمل الطلابي أو التطوعي؟<span class="req">*</span></span>
         <div class="chips" role="radiogroup" aria-labelledby="expLbl">
-          <label class="chip"><input type="radio" name="13. هل لديك خبرات سابقة في العمل الطلابي أو التطوعي؟" value="نعم" required><span>نعم</span></label>
-          <label class="chip"><input type="radio" name="13. هل لديك خبرات سابقة في العمل الطلابي أو التطوعي؟" value="لا"><span>لا</span></label>
+          <label class="chip"><input type="radio" name="15. هل لديك خبرات سابقة في العمل الطلابي أو التطوعي؟" value="نعم" required><span>نعم</span></label>
+          <label class="chip"><input type="radio" name="15. هل لديك خبرات سابقة في العمل الطلابي أو التطوعي؟" value="لا"><span>لا</span></label>
         </div>
       </div>
-      <div class="f full" id="q14wrap" hidden><label for="q14">إذا كانت الإجابة نعم: اذكر أبرز الأندية أو المبادرات والمهام التي قمت بها؟</label><textarea id="q14" name="14. إذا كانت الإجابة نعم: اذكر أبرز الأندية أو المبادرات والمهام التي قمت بها؟"></textarea></div>
-      <div class="f full"><label for="q15">ما هي أبرز المهارات التي تتقنها وتود توظيفها في النادي؟<span class="req">*</span></label><span class="hint">مثل: التصميم، إدارة حسابات التواصل، كتابة المحتوى، التنسيق الميداني، التواصل والقيادة، التوثيق، إلخ.</span><textarea id="q15" name="15. ما هي أبرز المهارات التي تتقنها وتود توظيفها في النادي؟" required></textarea></div>
-      <div class="f full"><label for="q16">اذكر رابط أعمالك / البورتفوليو (إن وجد)</label><span class="hint">مهم جداً للمتقدمين للجنة الإعلام والتصميم.</span><input id="q16" type="url" name="16. اذكر رابط أعمالك / البورتفوليو (إن وجد)" dir="ltr" style="text-align:right" placeholder="https://"></div>
+      <div class="f full" id="q14wrap" hidden><label for="q14">إذا كانت الإجابة نعم: اذكر أبرز الأندية أو المبادرات والمهام التي قمت بها؟</label><textarea id="q14" name="16. إذا كانت الإجابة نعم: اذكر أبرز الأندية أو المبادرات والمهام التي قمت بها؟"></textarea></div>
+      <div class="f full"><label for="q15">ما هي أبرز المهارات التي تتقنها وتود توظيفها في النادي؟<span class="req">*</span></label><span class="hint">مثل: التصميم، إدارة حسابات التواصل، كتابة المحتوى، التنسيق الميداني، التواصل والقيادة، التوثيق، إلخ.</span><textarea id="q15" name="17. ما هي أبرز المهارات التي تتقنها وتود توظيفها في النادي؟" required></textarea></div>
+      <div class="f full"><label for="q16">اذكر رابط أعمالك / البورتفوليو (إن وجد)</label><span class="hint">مهم جداً للمتقدمين للجنة الإعلام والتصميم.</span><input id="q16" type="url" name="18. اذكر رابط أعمالك / البورتفوليو (إن وجد)" dir="ltr" style="text-align:right" placeholder="https://"></div>
     </fieldset>
 
     <div class="actions">
@@ -284,7 +291,32 @@ blockquote{position:relative;margin:18px 0 0;font-family:var(--font-display);fon
   var ENDPOINT_AJAX='https://formsubmit.co/ajax/'+INBOX, ENDPOINT_FORM='https://formsubmit.co/'+INBOX;
   var form=document.getElementById('applyForm'),btn=document.getElementById('submitBtn'),msg=document.getElementById('msg'),card=document.getElementById('card');
   var w14=document.getElementById('q14wrap');
-  form.querySelectorAll('input[name="13. هل لديك خبرات سابقة في العمل الطلابي أو التطوعي؟"]').forEach(function(r){r.addEventListener('change',function(){w14.hidden=r.value!=='نعم'||!r.checked;if(w14.hidden)document.getElementById('q14').value=''})});
+
+  // committee questions: shown under each chosen committee
+  var CQ={"لجنة الأعضاء وبناء الطاقات": ["كيف بتكتشف شغف كل عضو وتساهم في تطويره؟", "إذا لاحظت تراجعًا في حماس أو أداء أحد الأعضاء، كيف تتعامل معه بخصوصية لتعزيز دوافعه دون أن تضغط عليه؟"], "لجنة العلاقات والشراكات": ["لو واجهت رفض من جهة خارجية لدعم فعالية، كيف بتتعامل مع الموقف وتصنع فرصة جديدة؟ أو شاركنا قصة لموقف تفاوضي نجحت فيه.", "كيف تطوّر علاقة طويلة الأمد مع شريك خارجي بعد انتهاء الفعالية المشتركة بينكم؟"], "لجنة البرامج والتخطيط": ["صف لنا خطتك لفعالية تكون مبتكرة وتجذب الحضور.", "كيف تتعامل مع تغيير مفاجئ في خطة الفعالية أثناء تنفيذها وبأقل الخسائر الممكنة؟"], "لجنة الإعلام والتسويق": ["كيف ممكن تصنع محتوى مميز لنادينا بدون استخدام النماذج الجاهزة؟", "ما هي استراتيجيتك لنشر تفاعل حقيقي وعفوي مع مبادرة جديدة للنادي، بعيدًا عن الطرق التقليدية؟"], "لجنة التصميم والفنون البصرية": ["اعرض لمستك البصرية المميزة وكيف تخدم رسالة النادي.", "كيف تترجم روح النادي وشعاره في تصميم واحد يعبّر عن الهوية البصرية لمشروع قادم؟"], "لجنة التقنية والدعم التقني": ["أعطنا مثال على مشكلة تقنية واجهتها وكيف قمت بحلها من واقع تجربتك؟", "لو تعطّل نموذج التسجيل أو الموقع قبل فعالية بساعات، وش أول خطواتك عشان تحل المشكلة وتضمن ما يتأثر الحضور؟"], "لجنة الابتكار والتطوير": ["اقترح فكرة واحدة خارج الصندوق لتطوير تجربة الأعضاء هذا العام.", "اقترح فكرة لمبادرة داخل النادي تحل مشكلة واجهتكم سابقًا ولا تعتمد على الميزانية."], "لجنة الجودة والتوثيق": ["ما هي المعايير اللي تشوفها أساسية لضمان نجاح أرشفة مبادراتنا؟", "ما هي طريقتك لتوثيق أثر الفعالية بطريقة تثبت نجاحها للإدارة أو الرعاة بالأرقام والتفاصيل الدقيقة؟"]};
+  var N1='8. ما هي اللجنة التي ترغب في الانضمام إليها كخيار أول؟',N2='9. ما هي اللجنة التي ترغب في الانضمام إليها كخيار ثاني؟';
+  var cqSaved={};
+  function esc(t){return String(t).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
+  function fillCQ(box,com,tag,start){
+    box.querySelectorAll('textarea').forEach(function(t){cqSaved[t.name]=t.value});
+    if(!com||!CQ[com]){box.hidden=true;box.innerHTML='';return}
+    var h='<h4>'+esc(com)+'<small>'+tag+'</small></h4>';
+    CQ[com].forEach(function(q,i){
+      var id=box.id+'q'+i,nm=(start+i)+'. '+com+' - '+q;
+      h+='<div class="f full"><label for="'+id+'">'+esc(q)+'<span class="req">*</span></label><textarea id="'+id+'" name="'+esc(nm)+'" required>'+esc(cqSaved[nm]||'')+'</textarea></div>';
+    });
+    box.innerHTML=h;box.hidden=false;
+  }
+  function renderCQ(){
+    var c1=(form.querySelector('input[name="'+N1+'"]:checked')||{}).value,c2=(form.querySelector('input[name="'+N2+'"]:checked')||{}).value;
+    if(c2===c1)c2='';
+    fillCQ(document.getElementById('cq1'),c1,'الرغبة الأولى',11);
+    fillCQ(document.getElementById('cq2'),c2,'الرغبة الثانية',13);
+    document.getElementById('cqEmpty').hidden=!!(c1&&c2);
+  }
+  form.querySelectorAll('input[name="'+N1+'"],input[name="'+N2+'"]').forEach(function(r){r.addEventListener('change',renderCQ)});
+  renderCQ();
+  form.querySelectorAll('input[name="15. هل لديك خبرات سابقة في العمل الطلابي أو التطوعي؟"]').forEach(function(r){r.addEventListener('change',function(){w14.hidden=r.value!=='نعم'||!r.checked;if(w14.hidden)document.getElementById('q14').value=''})});
   form.addEventListener('submit',function(e){
     e.preventDefault();msg.className='msg';msg.textContent='';
     var c1=(form.querySelector('input[name="8. ما هي اللجنة التي ترغب في الانضمام إليها كخيار أول؟"]:checked')||{}).value,c2=(form.querySelector('input[name="9. ما هي اللجنة التي ترغب في الانضمام إليها كخيار ثاني؟"]:checked')||{}).value;
