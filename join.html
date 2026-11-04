@@ -286,7 +286,9 @@ blockquote{position:relative;margin:18px 0 0;font-family:var(--font-display);fon
 </main>
 <script>
 (function(){
-  // requests go to the club inbox through FormSubmit
+  // main route: Google Apps Script (saves to the club Google Sheet + emails the inbox)
+  var GAS_URL='https://script.google.com/macros/s/AKfycbzh2tnSHPYTYwbMYK9VTMet2_oQOguzGTus5fyxD4m0_DlGGhw-muXRQ1aDRpqQi2cj/exec';
+  // backup route: FormSubmit
   var INBOX='himmakfu@gmail.com';
   var ENDPOINT_AJAX='https://formsubmit.co/ajax/'+INBOX, ENDPOINT_FORM='https://formsubmit.co/'+INBOX;
   var form=document.getElementById('applyForm'),btn=document.getElementById('submitBtn'),msg=document.getElementById('msg'),card=document.getElementById('card');
@@ -333,6 +335,20 @@ blockquote{position:relative;margin:18px 0 0;font-family:var(--font-display);fon
     btn.disabled=true;btn.firstChild.textContent='جاري الإرسال… ';
     var first=nm.split(' ')[0];
     try{sessionStorage.setItem('himmaName',first)}catch(_){}
+    sendGAS(fd).then(function(ok){if(ok)showDone(first);else sendFormSubmit(fd,first)});
+  });
+  function sendGAS(fd){
+    if(!/^https:\/\/script\.google\.com\//.test(GAS_URL))return Promise.resolve(false);
+    var fields=[],hp='';
+    fd.forEach(function(v,k){if(k==='_honey'){hp=v;return}if(k.charAt(0)==='_')return;fields.push([k,String(v)])});
+    var body=JSON.stringify({subject:document.getElementById('subject').value,hp:hp,fields:fields});
+    var ctl=('AbortController' in window)?new AbortController():null,t=setTimeout(function(){ctl&&ctl.abort()},25000);
+    return fetch(GAS_URL,{method:'POST',body:body,headers:{'Content-Type':'text/plain;charset=utf-8'},redirect:'follow',signal:ctl?ctl.signal:undefined})
+      .then(function(r){clearTimeout(t);return r.json()})
+      .then(function(j){return !!(j&&j.success)})
+      .catch(function(){clearTimeout(t);return false});
+  }
+  function sendFormSubmit(fd,first){
     var ctl=('AbortController' in window)?new AbortController():null, timer=setTimeout(function(){ctl&&ctl.abort()},20000);
     fetch(ENDPOINT_AJAX,{method:'POST',body:fd,headers:{'Accept':'application/json'},signal:ctl?ctl.signal:undefined})
       .then(function(r){clearTimeout(timer);return r.text().then(function(t){var j=null;try{j=JSON.parse(t)}catch(_){}return {status:r.status,j:j}})})
@@ -345,7 +361,7 @@ blockquote{position:relative;margin:18px 0 0;font-family:var(--font-display);fon
         nativeSubmit();
       })
       .catch(function(){clearTimeout(timer);nativeSubmit()});
-  });
+  }
   function showDone(first){
     card.innerHTML='<div class="done"><div class="tick"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></div><h2>وصلنا طلبك</h2><p>شكراً'+(first?' '+String(first).replace(/[<>&"]/g,''):'')+'، استلمنا طلبك وبنتواصل معك على جوالك أو إيميلك قريباً.</p><a href="index.html">الرجوع للموقع</a></div>';
     card.scrollIntoView({behavior:'smooth',block:'center'});
