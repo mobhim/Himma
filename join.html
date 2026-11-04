@@ -366,13 +366,10 @@ blockquote{position:relative;margin:18px 0 0;font-family:var(--font-display);fon
     card.innerHTML='<div class="done"><div class="tick"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></div><h2>وصلنا طلبك</h2><p>شكراً'+(first?' '+String(first).replace(/[<>&"]/g,''):'')+'، استلمنا طلبك وبنتواصل معك على جوالك أو إيميلك قريباً.</p><a href="index.html">الرجوع للموقع</a></div>';
     card.scrollIntoView({behavior:'smooth',block:'center'});
   }
-  // fallback: a normal page POST is not blocked the way a background request can be
+  // both routes failed: keep the answers on the page and let the applicant retry
   function nativeSubmit(){
-    msg.className='msg';msg.textContent='لحظة، نكمل الإرسال بطريقة ثانية…';
-    var r=document.createElement('input');r.type='hidden';r.name='_next';
-    r.value=location.origin+location.pathname+'?sent=1#apply';form.appendChild(r);
-    form.action=ENDPOINT_FORM;form.method='POST';form.setAttribute('accept-charset','UTF-8');
-    HTMLFormElement.prototype.submit.call(form);
+    btn.disabled=false;btn.firstChild.textContent='إرسال الطلب ';
+    msg.className='msg err';msg.textContent='تعذّر إرسال الطلب الحين بسبب مشكلة في الاتصال. إجاباتك محفوظة في الصفحة، جرّب الإرسال مرة ثانية بعد لحظات.';
   }
   if(/[?&]sent=1/.test(location.search)){
     var n='';try{n=sessionStorage.getItem('himmaName')||''}catch(_){}
