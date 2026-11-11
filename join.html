@@ -274,7 +274,8 @@ blockquote{position:relative;margin:18px 0 0;font-family:var(--font-display);fon
       </div>
       <div class="f full" id="q14wrap" hidden><label for="q14">إذا كانت الإجابة نعم: اذكر أبرز الأندية أو المبادرات والمهام التي قمت بها؟</label><textarea id="q14" name="16. إذا كانت الإجابة نعم: اذكر أبرز الأندية أو المبادرات والمهام التي قمت بها؟"></textarea></div>
       <div class="f full"><label for="q15">ما هي أبرز المهارات التي تتقنها وتود توظيفها في النادي؟<span class="req">*</span></label><span class="hint">مثل: التصميم، إدارة حسابات التواصل، كتابة المحتوى، التنسيق الميداني، التواصل والقيادة، التوثيق، إلخ.</span><textarea id="q15" name="17. ما هي أبرز المهارات التي تتقنها وتود توظيفها في النادي؟" required></textarea></div>
-      <div class="f full"><label for="q16">اذكر رابط أعمالك / البورتفوليو (إن وجد)</label><span class="hint">مهم جداً للمتقدمين للجنة الإعلام والتصميم.</span><input id="q16" type="url" name="18. اذكر رابط أعمالك / البورتفوليو (إن وجد)" dir="ltr" style="text-align:right" placeholder="https://"></div>
+      <div class="f full"><label for="q16"><span id="q16txt">اذكر رابط أعمالك / البورتفوليو (إن وجد)</span><span class="req" id="q16req" style="display:none">*</span></label><span class="hint" id="q16hint">مهم جداً للمتقدمين للجنة الإعلام والتصميم.</span><input id="q16" type="url" name="18. اذكر رابط أعمالك / البورتفوليو (إن وجد)" dir="ltr" style="text-align:right" placeholder="https://"></div>
+      <div class="f full" id="q17wrap" hidden><label for="q17">حسابك في لينكدإن / إكس (اختياري)</label><span class="hint">للمتقدمين كقادة: ضع رابط حسابك أو اسم المستخدم.</span><input id="q17" type="text" name="19. حسابك في لينكدإن / إكس (اختياري)" dir="ltr" style="text-align:right" placeholder="linkedin.com/in/… أو @username" disabled></div>
     </fieldset>
 
     <div class="actions">
@@ -315,7 +316,29 @@ blockquote{position:relative;margin:18px 0 0;font-family:var(--font-display);fon
     fillCQ(document.getElementById('cq1'),c1,'الرغبة الأولى',11);
     fillCQ(document.getElementById('cq2'),c2,'الرغبة الثانية',13);
     document.getElementById('cqEmpty').hidden=!!(c1&&c2);
+    syncPortfolio();
   }
+  // portfolio link is mandatory for anyone applying to lead the design committee
+  var DESIGN='لجنة التصميم والفنون البصرية',NR='7. التسجيل كـ';
+  var q16=document.getElementById('q16'),q16txt=document.getElementById('q16txt'),q16req=document.getElementById('q16req'),q16hint=document.getElementById('q16hint');
+  var q16txt0=q16txt.textContent,q16hint0=q16hint.textContent;
+  function needPortfolio(){
+    var role=(form.querySelector('input[name="'+NR+'"]:checked')||{}).value;
+    var c1=(form.querySelector('input[name="'+N1+'"]:checked')||{}).value,c2=(form.querySelector('input[name="'+N2+'"]:checked')||{}).value;
+    return role==='قائد'&&(c1===DESIGN||c2===DESIGN);
+  }
+  var q17=document.getElementById('q17'),q17wrap=document.getElementById('q17wrap');
+  function syncPortfolio(){
+    // LinkedIn / X account: optional, shown to leader applicants only
+    var lead=(form.querySelector('input[name="'+NR+'"]:checked')||{}).value==='قائد';
+    q17wrap.hidden=!lead;q17.disabled=!lead;if(!lead)q17.value='';
+    var need=needPortfolio();
+    q16.required=need;
+    q16req.style.display=need?'':'none';
+    q16txt.textContent=need?'رابط ملف أعمالك / البورتفوليو':q16txt0;
+    q16hint.textContent=need?'ملف الأعمال إجباري للمتقدمين لقيادة لجنة التصميم والفنون البصرية.':q16hint0;
+  }
+  form.querySelectorAll('input[name="'+NR+'"]').forEach(function(r){r.addEventListener('change',syncPortfolio)});
   form.querySelectorAll('input[name="'+N1+'"],input[name="'+N2+'"]').forEach(function(r){r.addEventListener('change',renderCQ)});
   renderCQ();
   form.querySelectorAll('input[name="15. هل لديك خبرات سابقة في العمل الطلابي أو التطوعي؟"]').forEach(function(r){r.addEventListener('change',function(){w14.hidden=r.value!=='نعم'||!r.checked;if(w14.hidden)document.getElementById('q14').value=''})});
@@ -325,7 +348,7 @@ blockquote{position:relative;margin:18px 0 0;font-family:var(--font-display);fon
     if(c1&&c2&&c1===c2){msg.className='msg err';msg.textContent='اختر لجنة مختلفة في الخيار الثاني.';return}
     if(!form.checkValidity()){
       var bad=form.querySelector(':invalid');
-      msg.className='msg err';msg.textContent='فيه حقول مطلوبة ما تعبّت، كمّلها وأرسل مرة ثانية.';
+      msg.className='msg err';msg.textContent=(bad===q16&&!q16.value.trim())?'ملف الأعمال إجباري لقادة لجنة التصميم، أضف رابط أعمالك وأرسل مرة ثانية.':'فيه حقول مطلوبة ما تعبّت، كمّلها وأرسل مرة ثانية.';
       if(bad&&bad.focus)bad.focus();form.reportValidity&&form.reportValidity();return;
     }
     var role=(form.querySelector('input[name="7. التسجيل كـ"]:checked')||{}).value||'';
