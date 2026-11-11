@@ -1,0 +1,223 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>همة: قبل وبعد</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600&family=Reem+Kufi:wght@500;700&display=swap">
+<style>
+:root{
+  --olive-deep:#2f3620;--ink:#1f2415;--silk:#efe6d2;--silk-dim:rgba(239,230,210,.74);--line:rgba(239,230,210,.16);--gold:#e2c47c;
+  --font-display:"Reem Kufi","IBM Plex Sans Arabic",system-ui,sans-serif;
+  --font-sans:"IBM Plex Sans Arabic","Segoe UI",Tahoma,system-ui,sans-serif;
+  --ease:cubic-bezier(.16,1,.3,1);
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--ink);color:var(--silk)}
+body{font-family:var(--font-sans);font-size:15px;line-height:1.75;padding:28px max(16px,env(safe-area-inset-left)) 64px}
+::selection{background:rgba(226,196,124,.35);color:#fff}
+.page{max-width:1500px;margin:0 auto;display:flex;flex-direction:column;gap:22px}
+header{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:14px 28px}
+h1{margin:0;font-family:var(--font-display);font-weight:700;font-size:clamp(30px,4vw,44px);line-height:1.2}
+.sub{margin:6px 0 0;max-width:46rem;color:var(--silk-dim)}
+.tools{display:flex;flex-wrap:wrap;gap:10px 18px;align-items:center}
+.group{display:inline-flex;padding:4px;border-radius:999px;background:rgba(239,230,210,.07);border:1px solid var(--line)}
+.group button{font:500 14px var(--font-sans);color:var(--silk-dim);background:none;border:0;padding:8px 18px;border-radius:999px;cursor:pointer;transition:background .2s,color .2s}
+.group button[aria-pressed="true"]{background:var(--silk);color:var(--olive-deep);font-weight:600}
+.group button:focus-visible,.check input:focus-visible,.reload:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+.check{display:inline-flex;align-items:center;gap:8px;font-size:14px;color:var(--silk-dim);cursor:pointer}
+.check input{width:18px;height:18px;accent-color:var(--gold)}
+.reload{font:500 14px var(--font-sans);color:var(--silk);background:none;border:1px solid var(--line);padding:8px 16px;border-radius:999px;cursor:pointer}
+.reload:hover{background:rgba(239,230,210,.08)}
+
+.stage{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px;align-items:start}
+.side{display:flex;flex-direction:column;gap:10px;min-width:0}
+.tag{display:flex;align-items:baseline;gap:10px}
+.tag b{font-family:var(--font-display);font-size:22px;font-weight:700}
+.tag span{font-size:13px;color:var(--silk-dim)}
+.side.after .tag b{color:var(--gold)}
+.view{position:relative;border-radius:18px;overflow:hidden;background:#2f3620;border:1px solid var(--line);box-shadow:0 30px 60px -30px rgba(0,0,0,.8)}
+.side.after .view{border-color:rgba(226,196,124,.55)}
+.view iframe{display:block;border:0;transform-origin:top right;background:#2f3620}
+.stage.phone{grid-template-columns:repeat(2,auto);justify-content:center;gap:40px}
+.stage.phone .view{border-radius:34px;border-width:8px;border-color:#11140b}
+.stage.phone .side.after .view{border-color:#11140b;box-shadow:0 0 0 1.5px rgba(226,196,124,.6),0 30px 60px -30px rgba(0,0,0,.8)}
+
+.notice{margin:0;padding:14px 18px;border-radius:14px;border:1px solid rgba(226,196,124,.4);background:rgba(226,196,124,.08);font-size:14px}
+.notice b{color:var(--gold)}
+
+h2{margin:26px 0 4px;font-family:var(--font-display);font-weight:700;font-size:clamp(24px,3vw,32px)}
+.changes{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr) minmax(0,1.3fr);gap:0;border-top:1px solid var(--line)}
+.changes>div{padding:14px 0 14px 18px;border-bottom:1px solid var(--line);min-width:0}
+.changes .h{font-size:12.5px;color:var(--silk-dim);padding-block:10px}
+.changes .what{font-weight:600;color:#fff}
+.changes .was{color:var(--silk-dim)}
+.changes .now{color:var(--silk)}
+@media (max-width:900px){
+  .stage:not(.phone){grid-template-columns:1fr}
+  .changes{grid-template-columns:1fr}
+  .changes .h{display:none}
+  .changes>div{padding:4px 0;border-bottom:0}
+  .changes .what{padding-top:16px;border-top:1px solid var(--line)}
+  .changes .was::before{content:"قبل: ";color:var(--silk-dim)}
+  .changes .now::before{content:"بعد: ";color:var(--gold)}
+  .changes .now{padding-bottom:16px}
+}
+@media (max-width:860px){.stage.phone{grid-template-columns:1fr;justify-items:center}}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<div class="page">
+  <header>
+    <div>
+      <h1>همة: قبل وبعد</h1>
+      <p class="sub">النسختان تشتغلان فعلياً جنب بعض. مرّر في أي واحدة والثانية تمشي معها، وجرّب الضغط والتعبئة في كل نسخة.</p>
+    </div>
+    <div class="tools">
+      <div class="group" role="group" aria-label="الصفحة">
+        <button type="button" data-page="index.html" aria-pressed="true">الرئيسية</button>
+        <button type="button" data-page="join.html" aria-pressed="false">نموذج الانضمام</button>
+      </div>
+      <div class="group" role="group" aria-label="المقاس">
+        <button type="button" data-size="desktop" aria-pressed="true">كمبيوتر</button>
+        <button type="button" data-size="phone" aria-pressed="false">جوال</button>
+      </div>
+      <label class="check"><input type="checkbox" id="sync" checked>ربط التمرير</label>
+      <button type="button" class="reload" id="reload">إعادة التشغيل</button>
+    </div>
+  </header>
+
+  <p class="notice" id="motionNote" hidden><b>الحركة مطفأة على هذا الجهاز.</b> تأثيرات الحركة في ويندوز مقفلة، فالنسختان تظهران هنا بدون موشن. شغّلها من الإعدادات، ثم Accessibility، ثم Visual effects، ثم Animation effects، واضغط «إعادة التشغيل».</p>
+
+  <div class="stage" id="stage">
+    <div class="side before">
+      <div class="tag"><b>قبل</b><span>النسخة المنشورة قبل التعديلات</span></div>
+      <div class="view"><iframe id="fBefore" title="الموقع قبل التعديلات" src="before/index.html"></iframe></div>
+    </div>
+    <div class="side after">
+      <div class="tag"><b>بعد</b><span>النسخة الجديدة على جهازك</span></div>
+      <div class="view"><iframe id="fAfter" title="الموقع بعد التعديلات" src="index.html"></iframe></div>
+    </div>
+  </div>
+
+  <section>
+    <h2>وش تغيّر في تجربة الزائر</h2>
+    <div class="changes">
+      <div class="h">الموضع</div><div class="h">قبل</div><div class="h">بعد</div>
+
+      <div class="what">أول ثانيتين</div>
+      <div class="was">كل شي يطلع مرة وحدة بنفس الحركة.</div>
+      <div class="now">افتتاحية مرتبة: الخلفية تنفرد من اليمين، الشعار ينكتب مثل الخط العربي، ثم الجملة، ثم الأزرار.</div>
+
+      <div class="what">مسيرة الإنجازات</div>
+      <div class="was">شريط ثابت، وكل المحطات ظاهرة بنفس الوزن.</div>
+      <div class="now">الشريط ينرسم مع التمرير ونقطة ضوء تقوده، وكل محطة تضيء لما يوصلها، فالزائر يحس إنه يمشي الرحلة.</div>
+
+      <div class="what">الهيكل التنظيمي</div>
+      <div class="was">يظهر كامل دفعة وحدة.</div>
+      <div class="now">يتركّب بترتيب المناصب: الرئيسة، ثم النائب والاستشاري، ثم قادة اللجان، فيُفهم التسلسل من الحركة نفسها.</div>
+
+      <div class="what">بطاقات اللجان</div>
+      <div class="was">وصف قصير فقط، واللي يبي يقدّم يرجع فوق ويدوّر زر الانضمام.</div>
+      <div class="now">كل بطاقة تنفتح على مهام اللجنة وزر «قدّم على هذه اللجنة»، والنموذج يفتح واللجنة مختارة جاهزة.</div>
+
+      <div class="what">فنجال همة</div>
+      <div class="was">غير موجود في الموقع.</div>
+      <div class="now">قسم جديد فيه البطاقات الخمس: الزائر يسحب بطاقة عشوائية أو يقلب أي بطاقة ويقرأ رسالتها.</div>
+
+      <div class="what">نموذج الانضمام</div>
+      <div class="was">صفحة طويلة فيها كل الأسئلة مرة وحدة، ولو انقفلت الصفحة تضيع الإجابات.</div>
+      <div class="now">خمس خطوات مع شريط تقدّم، كل خطوة تتحقق من حقولها قبل الانتقال، والإجابات تنحفظ تلقائياً وترجع لو رجع المتقدّم.</div>
+
+      <div class="what">المتقدمون كقادة</div>
+      <div class="was">رابط الأعمال اختياري للجميع.</div>
+      <div class="now">ملف الأعمال إجباري لقادة لجنة التصميم، وحقل اختياري لحساب لينكدإن أو إكس لكل القادة.</div>
+
+      <div class="what">الصور والأزرار</div>
+      <div class="was">الصورة تظهر وتختفي فجأة، والأزرار ما تتجاوب مع الضغط.</div>
+      <div class="now">الصور تنفتح وتنقفل بنعومة، الأزرار تنضغط، واللجنة تومض لما توصلها من الهيكل.</div>
+
+      <div class="what">التنقل في الصفحة</div>
+      <div class="was">شريط التنقل يختفي بعد الهيرو، واللي في نص الصفحة لازم يرجع فوق.</div>
+      <div class="now">شريط صغير ثابت يظهر بعد الهيرو فيه الأقسام وزر الانضمام، وتحته خيط يبيّن وين وصلت في الصفحة.</div>
+
+      <div class="what">لجان صفحة الانضمام</div>
+      <div class="was">قائمة ثابتة بأسماء اللجان ومهامها.</div>
+      <div class="now">كل بطاقة تنقلب: الاسم قدام، والمهام ورا مع زر «اخترها خياري الأول» اللي يعبّي النموذج عنك.</div>
+
+      <div class="what">أخطاء النموذج</div>
+      <div class="was">رسالة وحدة عامة تحت الزر.</div>
+      <div class="now">كل حقل يقول مشكلته تحته مباشرة، مثل صيغة البريد أو رقم الجوال.</div>
+
+      <div class="what">معرض الصور</div>
+      <div class="was">تفتح صورة، تقفلها، تفتح اللي بعدها.</div>
+      <div class="now">أسهم وعدّاد وسحب بالإصبع بين صور نفس الفعالية.</div>
+
+      <div class="what">الجوال</div>
+      <div class="was">نفس حمل الكمبيوتر كامل: خلفية بدقة عالية وزجاج مموّه على كل بطاقة.</div>
+      <div class="now">نسخة أخف: خلفية بنص الجهد، بدون تمويه مكلف، وخطوط أكبر للقراءة.</div>
+
+      <div class="what">مشاركة الرابط</div>
+      <div class="was">الرابط يطلع في واتساب وإكس بدون عنوان ولا وصف.</div>
+      <div class="now">يطلع باسم النادي ووصفه. صورة المعاينة لسا ما انضافت.</div>
+
+      <div class="what">البطارية والأداء</div>
+      <div class="was">الخلفية المتحركة تشتغل طول الوقت حتى والتبويب مخفي.</div>
+      <div class="now">توقف لما التبويب مو ظاهر، والأضواء المتحركة توقف لما قسمها خارج الشاشة.</div>
+    </div>
+  </section>
+</div>
+
+<script>
+(function(){
+  var stage=document.getElementById('stage'),fb=document.getElementById('fBefore'),fa=document.getElementById('fAfter'),sync=document.getElementById('sync');
+  var page='index.html',size='desktop';
+  var W={desktop:1280,phone:390},H={desktop:800,phone:780};
+  function fit(){
+    stage.classList.toggle('phone',size==='phone');
+    [fb,fa].forEach(function(f){
+      var box=f.parentNode;
+      if(size==='phone'){
+        f.style.width=W.phone+'px';f.style.height=H.phone+'px';f.style.transform='';
+        box.style.width=(W.phone+16)+'px';box.style.height=(H.phone+16)+'px';
+      }else{
+        box.style.width='';
+        var s=Math.min(1,box.clientWidth/W.desktop);
+        f.style.width=W.desktop+'px';f.style.height=H.desktop+'px';f.style.transform='scale('+s+')';
+        box.style.height=Math.round(H.desktop*s)+'px';
+      }
+    });
+  }
+  function load(){fb.src='before/'+page;fa.src=page}
+  function press(sel,attr,val){[].forEach.call(document.querySelectorAll(sel),function(b){b.setAttribute('aria-pressed',b.getAttribute(attr)===val)})}
+  [].forEach.call(document.querySelectorAll('[data-page]'),function(b){b.addEventListener('click',function(){page=b.getAttribute('data-page');press('[data-page]','data-page',page);load()})});
+  [].forEach.call(document.querySelectorAll('[data-size]'),function(b){b.addEventListener('click',function(){size=b.getAttribute('data-size');press('[data-size]','data-size',size);fit();load()})});
+  document.getElementById('reload').addEventListener('click',load);
+  addEventListener('resize',fit);fit();
+
+  // linked scrolling: whichever side the pointer is over leads, the other follows by proportion
+  var lead=null;
+  function wire(f,other){
+    f.parentNode.addEventListener('pointerenter',function(){lead=f});
+    f.addEventListener('load',function(){
+      var w;try{w=f.contentWindow;w.document}catch(_){return}
+      w.addEventListener('scroll',function(){
+        if(!sync.checked||lead!==f)return;
+        var o;try{o=other.contentWindow;o.document}catch(_){return}
+        var d=w.document.documentElement,od=o.document.documentElement;
+        var max=d.scrollHeight-w.innerHeight,omax=od.scrollHeight-o.innerHeight;
+        if(max>0&&omax>0)o.scrollTo(0,w.scrollY/max*omax);
+      },{passive:true});
+    });
+  }
+  wire(fb,fa);wire(fa,fb);
+  document.getElementById('motionNote').hidden=!matchMedia('(prefers-reduced-motion: reduce)').matches;
+})();
+</script>
+</body>
+</html>
