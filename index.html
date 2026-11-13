@@ -452,6 +452,9 @@ a:focus-visible{outline:2px solid var(--silk);outline-offset:3px;border-radius:6
 .vm{display:flex;flex-direction:column;gap:12px;min-width:0;padding-top:18px;border-top:1px solid rgba(239,230,210,.32)}
 .vm h3{font-family:var(--font-display);font-size:16px;font-weight:500;color:#d9cba6}
 .vm p{margin:0;font-size:clamp(18px,1.9vw,23px);line-height:1.8;color:var(--silk);text-wrap:pretty}
+.vm h3,.vm p{text-shadow:0 0 2px #0d1005,0 2px 4px #0d1005,0 3px 12px rgba(13,16,5,.95),0 0 26px rgba(13,16,5,.9)}
+.vm{position:relative;isolation:isolate}
+.vm::before{content:"";position:absolute;inset:6px -14px -14px;z-index:-1;border-radius:22px;background:rgba(16,20,7,.5);box-shadow:0 0 28px 14px rgba(16,20,7,.5);pointer-events:none}
 
 /* films: the official film leads, the rest sit beside it */
 .media-grid{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}
