@@ -335,7 +335,7 @@ html{scrollbar-color:rgba(239,230,210,.4) #262c18}
       <div class="f full" id="q14wrap" hidden><label for="q14">إذا كانت الإجابة نعم: اذكر أبرز الأندية أو المبادرات والمهام التي قمت بها؟</label><textarea id="q14" name="16. إذا كانت الإجابة نعم: اذكر أبرز الأندية أو المبادرات والمهام التي قمت بها؟"></textarea></div>
       <div class="f full"><label for="q15">ما هي أبرز المهارات التي تتقنها وتود توظيفها في النادي؟<span class="req">*</span></label><span class="hint">مثل: التصميم، إدارة حسابات التواصل، كتابة المحتوى، التنسيق الميداني، التواصل والقيادة، التوثيق، إلخ.</span><textarea id="q15" name="17. ما هي أبرز المهارات التي تتقنها وتود توظيفها في النادي؟" required></textarea></div>
       <div class="f full"><label for="q16"><span id="q16txt">اذكر رابط أعمالك / البورتفوليو (إن وجد)</span><span class="req" id="q16req" style="display:none">*</span></label><span class="hint" id="q16hint">مهم جداً للمتقدمين للجنة الإعلام والتصميم.</span><input id="q16" type="url" name="18. اذكر رابط أعمالك / البورتفوليو (إن وجد)" dir="ltr" style="text-align:right" placeholder="https://"></div>
-      <div class="f full" id="q17wrap" hidden><label for="q17">حسابك في لينكدإن / إكس (اختياري)</label><span class="hint">للمتقدمين كقادة: ضع رابط حسابك أو اسم المستخدم.</span><input id="q17" type="text" name="19. حسابك في لينكدإن / إكس (اختياري)" dir="ltr" style="text-align:right" placeholder="linkedin.com/in/… أو @username" disabled></div>
+      <div class="f full" id="q17wrap"><label for="q17"><span id="q17txt">حسابك في لينكدإن / إكس (اختياري)</span><span class="req" id="q17req" style="display:none">*</span></label><span class="hint" id="q17hint">ضع رابط حسابك أو اسم المستخدم.</span><input id="q17" type="text" name="19. حسابك في لينكدإن / إكس (اختياري)" dir="ltr" style="text-align:right" placeholder="linkedin.com/in/… أو @username"></div>
     </fieldset>
 
     <div class="actions">
@@ -389,9 +389,12 @@ html{scrollbar-color:rgba(239,230,210,.4) #262c18}
   }
   var q17=document.getElementById('q17'),q17wrap=document.getElementById('q17wrap');
   function syncPortfolio(){
-    // LinkedIn / X account: optional, shown to leader applicants only
+    // LinkedIn / X account: required for leader applicants, optional for members
     var lead=(form.querySelector('input[name="'+NR+'"]:checked')||{}).value==='قائد';
-    q17wrap.hidden=!lead;q17.disabled=!lead;if(!lead)q17.value='';
+    q17.required=lead;
+    document.getElementById('q17req').style.display=lead?'':'none';
+    document.getElementById('q17txt').textContent=lead?'حسابك في لينكدإن / إكس':'حسابك في لينكدإن / إكس (اختياري)';
+    document.getElementById('q17hint').textContent=lead?'إجباري للمتقدمين كقادة: ضع رابط حسابك أو اسم المستخدم.':'ضع رابط حسابك أو اسم المستخدم.';
     var need=needPortfolio();
     q16.required=need;
     q16req.style.display=need?'':'none';
@@ -559,7 +562,7 @@ html{scrollbar-color:rgba(239,230,210,.4) #262c18}
   // each field says what is wrong with it, in its own place
   function say(e){
     var v=e.validity;
-    if(v.valueMissing)return e.type==='radio'?'اختر واحداً من الخيارات.':(e.id==='q16'?'ملف الأعمال إجباري لقادة لجنة التصميم، أضف رابط أعمالك.':'هذا الحقل مطلوب.');
+    if(v.valueMissing)return e.type==='radio'?'اختر واحداً من الخيارات.':(e.id==='q16'?'ملف الأعمال إجباري لقادة لجنة التصميم، أضف رابط أعمالك.':e.id==='q17'?'حساب لينكدإن أو إكس إجباري للمتقدمين كقادة.':'هذا الحقل مطلوب.');
     if(v.typeMismatch)return e.type==='email'?'اكتب البريد بصيغة صحيحة، مثل name@example.com':'اكتب الرابط كاملاً، ويبدأ بـ https://';
     if(v.patternMismatch)return e.id==='q6'?'رقم الجوال أرقام فقط، مثل 05xxxxxxxx':'أرقام فقط، بدون مسافات أو حروف.';
     if(v.rangeUnderflow||v.rangeOverflow||v.badInput||v.stepMismatch)return 'اكتب رقماً بين '+(e.min||1)+' و'+(e.max||10)+'.';
