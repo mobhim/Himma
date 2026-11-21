@@ -1,0 +1,784 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>قدّها؟ · تحدي همة</title>
+<link rel="icon" href="logo.webp">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<meta name="description" content="قدّها؟ تحدي الأمثال والكلمات من نادي همة لإعداد القادة: خمسة أنماط لعب، ثلاثة مستويات، وأسئلة من أمثالنا وسوالفنا اليومية.">
+<meta name="theme-color" content="#2f3620">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="ar_SA">
+<meta property="og:site_name" content="همة لإعداد القادة">
+<meta property="og:title" content="قدّها؟ · تحدي همة">
+<meta property="og:description" content="تحدي الأمثال والكلمات من نادي همة لإعداد القادة. جاوب، اجمع النقاط، وأثبت أنك قدّها.">
+<meta name="twitter:card" content="summary">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@300;400;500;600&family=Reem+Kufi:wght@500;700&display=swap">
+<style>
+/* Himma identity tokens, taken as they are from index.html */
+:root{
+  --olive-deep:#2f3620;
+  --olive:#4f5a33;
+  --olive-light:#7d8a55;
+  --silk:#efe6d2;
+  --silk-dim:rgba(239,230,210,.72);
+  --line:rgba(239,230,210,.12);
+  --sand:#cdbf9f;
+  --gold:#e2c47c;
+  --sage:#d9e2b4;
+  --blush:#f0b8a6;
+  --font-display:"Reem Kufi","IBM Plex Sans Arabic",system-ui,sans-serif;
+  --font-sans:"IBM Plex Sans Arabic","Segoe UI",Tahoma,system-ui,sans-serif;
+  --ease:cubic-bezier(0.22,1,0.36,1);
+  --slow-ease:cubic-bezier(0.65,0,0.35,1);
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+html,body{background:var(--olive-deep);color:var(--silk)}
+body{margin:0;font-family:var(--font-sans);font-size:15px;line-height:1.7;overflow-x:hidden;-webkit-tap-highlight-color:transparent}
+::selection{background:rgba(239,230,210,.2);color:#fff}
+button{font:inherit;color:inherit;cursor:pointer;border:0;background:none;padding:0}
+[hidden]{display:none!important}
+
+/* background field, same layers as the site */
+#bg{position:fixed;inset:0;width:100%;height:100%;z-index:0;display:block}
+.grain{position:fixed;inset:0;z-index:1;pointer-events:none;opacity:.12;mix-blend-mode:overlay;
+  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>")}
+.pattern{position:fixed;inset:0;z-index:1;pointer-events:none;opacity:.07;background-size:84px 84px;background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='84' height='84' viewBox='0 0 84 84'><g fill='none' stroke='%23efe6d2' stroke-width='1'><rect x='24' y='24' width='36' height='36'/><rect x='24' y='24' width='36' height='36' transform='rotate(45 42 42)'/><circle cx='42' cy='42' r='6'/><path d='M0 0L24 24M84 0L60 24M0 84L24 60M84 84L60 60'/></g></svg>");-webkit-mask-image:radial-gradient(ellipse at 50% 30%,#000 10%,transparent 75%);mask-image:radial-gradient(ellipse at 50% 30%,#000 10%,transparent 75%)}
+.vignette{position:fixed;inset:0;z-index:1;pointer-events:none;background:radial-gradient(ellipse at 50% 35%,transparent 40%,rgba(20,24,12,.55) 100%)}
+/* away from the welcome screen the field steps back so the text stays easy to read */
+.vignette::after{content:'';position:absolute;inset:0;background:rgba(28,33,17,.5);opacity:0;transition:opacity .6s ease}
+body.calm .vignette::after{opacity:1}
+
+/* liquid glass, as on the site */
+.liquid-glass{background:rgba(255,255,255,.01);background-blend-mode:luminosity;backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);border:none;box-shadow:inset 0 1px 1px rgba(255,255,255,.1);position:relative;overflow:hidden}
+.liquid-glass::before{content:'';position:absolute;inset:0;border-radius:inherit;padding:1.4px;
+  background:linear-gradient(180deg,rgba(255,255,255,.45) 0%,rgba(255,255,255,.15) 20%,rgba(255,255,255,0) 40%,rgba(255,255,255,0) 60%,rgba(255,255,255,.15) 80%,rgba(255,255,255,.45) 100%);
+  -webkit-mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);-webkit-mask-composite:xor;mask-composite:exclude;pointer-events:none}
+
+main{position:relative;z-index:10;width:100%;min-height:100vh;min-height:100dvh;display:flex;flex-direction:column;align-items:center;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));
+  padding-top:max(14px,env(safe-area-inset-top,0px));padding-bottom:max(22px,env(safe-area-inset-bottom,0px))}
+.wrap{width:100%;max-width:46rem;display:flex;flex-direction:column;flex:1}
+
+/* top bar */
+.top{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:8px 10px 8px 14px;border-radius:999px;
+  background:rgba(38,44,24,.8);box-shadow:0 14px 34px -16px rgba(10,12,6,.85),inset 0 0 0 1px rgba(255,248,225,.16)}
+.brand{display:flex;align-items:center;gap:10px;font-family:var(--font-display);font-size:17px;color:var(--silk);text-decoration:none;min-height:40px}
+.brand img{height:32px;width:auto;filter:drop-shadow(0 2px 6px rgba(20,24,12,.4))}
+.brand span{color:var(--silk-dim);font-size:15px}
+.top-side{display:flex;align-items:center;gap:8px}
+.pill{display:inline-flex;align-items:center;min-height:40px;font-size:13px;font-weight:500;padding:8px 18px;border-radius:999px;background:var(--silk);color:var(--olive-deep);text-decoration:none;transition:transform .2s}
+.pill:hover{transform:translateY(-1px)}
+.pill.quiet{background:rgba(255,255,255,.08);color:var(--silk);box-shadow:inset 0 0 0 1px rgba(255,248,225,.16)}
+.score-chip{display:inline-flex;align-items:baseline;gap:6px;min-height:40px;padding:7px 14px;border-radius:999px;font-size:13px;color:var(--silk-dim);font-variant-numeric:tabular-nums}
+.score-chip b{font-family:var(--font-display);font-size:18px;font-weight:700;color:var(--silk);display:inline-block}
+.score-chip b.bump{animation:bump .5s var(--ease)}
+@keyframes bump{35%{transform:scale(1.35);color:var(--gold)}}
+
+/* screens */
+.screen{display:flex;flex-direction:column;flex:1;animation:rise .7s var(--ease) both}
+@keyframes rise{from{opacity:.001;transform:translateY(18px)}to{opacity:1;transform:none}}
+h1,h2{margin:0;font-family:var(--font-display);font-weight:700;color:var(--silk);text-wrap:balance}
+h1:focus,h2:focus{outline:none}
+.eyebrow{font-size:12.5px;letter-spacing:.1em;color:var(--sand)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;font:500 15px var(--font-sans);min-height:50px;padding:13px 26px;border-radius:999px;text-decoration:none;transition:transform .2s,background .2s}
+.btn-main{background:var(--silk);color:var(--olive-deep)}
+.btn-main:hover{transform:translateY(-2px)}
+.btn-ghost{color:var(--silk)}
+.btn-ghost:hover{background:rgba(255,255,255,.06)}
+.btn svg{width:16px;height:16px}
+a:focus-visible,button:focus-visible{outline:2px solid var(--silk);outline-offset:3px}
+.btn-main:focus-visible,.pill:focus-visible{outline-color:#fff}
+[data-i] svg{width:100%;height:100%;display:block}
+[data-i]{font-style:normal;display:block}
+
+/* home */
+.hero{align-items:center;justify-content:center;text-align:center;gap:18px;padding-block:clamp(24px,6vh,64px)}
+.logo-big{width:clamp(150px,30vw,230px);height:auto;filter:drop-shadow(0 10px 24px rgba(20,24,12,.55)) drop-shadow(0 0 40px rgba(244,234,204,.18));animation:logoIn 1.5s var(--ease) both,logoWipe 1.5s var(--slow-ease) backwards}
+@keyframes logoIn{from{opacity:.001;transform:translateY(12px) scale(1.035)}to{opacity:1;transform:none}}
+@keyframes logoWipe{
+  from{-webkit-mask:linear-gradient(to left,#000 40%,transparent 60%) 0% 0/300% 100% no-repeat;mask:linear-gradient(to left,#000 40%,transparent 60%) 0% 0/300% 100% no-repeat}
+  to{-webkit-mask:linear-gradient(to left,#000 40%,transparent 60%) 100% 0/300% 100% no-repeat;mask:linear-gradient(to left,#000 40%,transparent 60%) 100% 0/300% 100% no-repeat}
+}
+.tag{font-size:12.5px;letter-spacing:.06em;padding:6px 16px;border-radius:999px;color:var(--silk-dim);animation:rise 1s .5s ease-out both}
+.title{font-size:clamp(64px,15vw,120px);line-height:1.1;text-shadow:0 2px 30px rgba(20,24,12,.4)}
+.title .w{display:inline-block;animation:wordIn 900ms .7s var(--ease) both}
+.title .g{color:transparent;background:linear-gradient(180deg,#fff 10%,#cdbf9f 95%);-webkit-background-clip:text;background-clip:text}
+@keyframes wordIn{from{opacity:.001;filter:blur(12px);transform:translateY(-10px)}to{opacity:1;filter:none;transform:none}}
+.statement{margin:0;max-width:32rem;font-weight:500;font-size:clamp(18px,2.6vw,22px);line-height:1.8;color:var(--silk);text-wrap:balance;text-shadow:0 2px 24px rgba(20,24,12,.45);animation:rise .9s .95s var(--ease) both}
+.ctas{display:flex;flex-direction:column;align-items:center;gap:14px;width:100%;animation:rise .9s 1.15s var(--ease) both}
+.ctas .btn-main{min-width:min(260px,100%);min-height:56px;font-size:17px;font-weight:600}
+.facts{display:flex;flex-wrap:wrap;justify-content:center;gap:8px 22px;margin:0;padding:0;list-style:none;font-size:13.5px;color:var(--silk-dim)}
+.facts b{font-family:var(--font-display);font-size:17px;color:var(--silk);margin-inline-end:5px}
+.best-line{font-size:13.5px;color:var(--sand);min-height:1.7em}
+
+/* modes */
+.sec-head{display:flex;flex-direction:column;gap:4px;margin:clamp(22px,5vh,44px) 0 20px}
+.sec-head h2{font-size:clamp(28px,5vw,40px);line-height:1.3}
+.mode{display:flex;align-items:center;gap:14px;width:100%;text-align:start;padding:16px 18px;border-radius:22px;min-height:76px;transition:transform .25s var(--ease),background .25s}
+.mode.liquid-glass,.switch.liquid-glass{background:rgba(38,44,24,.45)}
+.mode.liquid-glass:hover{transform:translateY(-2px);background:rgba(60,68,38,.6)}
+.mode:hover{transform:translateY(-2px)}
+.mode:active{transform:scale(.985)}
+.mode>i{width:44px;height:44px;padding:11px;border-radius:14px;background:rgba(255,255,255,.1);box-shadow:inset 0 1px 1px rgba(255,255,255,.15);color:#fff;flex:none}
+.mode b{display:block;font-family:var(--font-display);font-size:19px;font-weight:500;line-height:1.4;color:var(--silk)}
+.mode span{display:block;font-size:13.5px;color:var(--silk-dim);line-height:1.6}
+.mode em{margin-inline-start:auto;flex:none;font-style:normal;font-size:12px;color:var(--sand);white-space:nowrap}
+.mode.feature{background:var(--silk);color:var(--olive-deep);padding:20px;box-shadow:0 18px 40px -22px rgba(10,12,6,.9)}
+.mode.feature:hover{background:#f6efdc}
+.mode.feature b{color:var(--olive-deep);font-weight:700;font-size:22px}
+.mode.feature span{color:#4a4d30}
+.mode.feature em{color:#5d5f3f}
+.mode.feature>i{background:var(--olive-deep);color:var(--silk);box-shadow:none}
+.mode.feature:focus-visible{outline-color:#fff}
+.mode-grid{display:grid;grid-template-columns:1fr;gap:10px;margin-top:10px}
+.mode-grid .mode,.mode.feature{animation:rise .6s var(--ease) both;animation-delay:calc(var(--n,0)*55ms + 80ms)}
+@media (min-width:700px){.mode-grid{grid-template-columns:1fr 1fr}.mode-grid .mode:last-child{grid-column:1/-1}}
+.switch{display:flex;align-items:center;gap:14px;width:100%;margin-top:14px;padding:14px 18px;border-radius:22px;text-align:start;min-height:64px}
+.switch b{display:block;font-weight:500;font-size:15px;color:var(--silk)}
+.switch span{display:block;font-size:13px;color:var(--silk-dim);line-height:1.6}
+.switch .knob{margin-inline-start:auto;flex:none;width:50px;height:30px;border-radius:999px;background:rgba(255,255,255,.12);box-shadow:inset 0 0 0 1px rgba(255,248,225,.2);position:relative;transition:background .25s}
+.switch .knob::after{content:'';position:absolute;top:4px;inset-inline-start:4px;width:22px;height:22px;border-radius:50%;background:var(--silk-dim);transition:transform .3s var(--ease),background .25s}
+.switch[aria-checked="true"] .knob{background:var(--sage)}
+.switch[aria-checked="true"] .knob::after{transform:translateX(-20px);background:var(--olive-deep)}
+
+/* play */
+.hud{display:flex;align-items:center;gap:12px;margin:18px 0 0}
+.steps{flex:1;display:flex;gap:5px;direction:rtl}
+.steps i{flex:1;height:6px;border-radius:6px;background:rgba(239,230,210,.16);transition:background .4s,transform .4s var(--ease)}
+.steps i.now{background:rgba(239,230,210,.5);transform:scaleY(1.5)}
+.steps i.ok{background:var(--sage)}
+.steps i.no{background:var(--blush)}
+.count{font-size:13px;color:var(--silk-dim);font-variant-numeric:tabular-nums;white-space:nowrap}
+.timer{display:flex;align-items:center;gap:10px;margin-top:12px;font-size:13px;color:var(--silk-dim);font-variant-numeric:tabular-nums}
+.timer .rail{flex:1;height:4px;border-radius:4px;background:rgba(239,230,210,.14);overflow:hidden}
+.timer .rail i{display:block;height:100%;border-radius:4px;background:linear-gradient(270deg,#d9cba6,#fffbea);transform-origin:right;transform:scaleX(var(--t,1));transition:transform .25s linear}
+.timer.low .rail i{background:var(--blush)}
+.timer b{min-width:2.2ch;text-align:center;font-weight:500;color:var(--silk)}
+
+.qwrap{display:flex;flex-direction:column;gap:14px;margin-top:16px;flex:1}
+.qwrap.in .qcard{animation:qIn .55s var(--ease) both}
+.qwrap.in .opt{animation:rise .5s var(--ease) both;animation-delay:calc(var(--n)*60ms + 140ms)}
+.qwrap.out{animation:qOut .22s ease-in both}
+@keyframes qIn{from{opacity:.001;transform:translateY(14px) scale(.985);filter:blur(6px)}to{opacity:1;transform:none;filter:none}}
+@keyframes qOut{to{opacity:0;transform:translateY(-10px)}}
+.qcard{padding:22px 22px 26px;border-radius:24px;display:flex;flex-direction:column;gap:10px;text-align:center;background:rgba(38,44,24,.42)}
+.qmeta{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.qmeta .lvl{font-size:12px;color:var(--silk-dim);padding:3px 12px;border-radius:999px;background:rgba(255,255,255,.08)}
+.qhint{margin:6px 0 0;font-size:14px;color:var(--silk-dim)}
+.qtext{margin:0;font-family:var(--font-display);font-weight:700;font-size:clamp(26px,6.4vw,40px);line-height:1.55;color:var(--silk);text-wrap:balance;word-spacing:.14em;text-shadow:0 2px 24px rgba(20,24,12,.4)}
+.qtext.long{font-size:clamp(23px,5.4vw,34px)}
+.qtext .gap{display:inline-block;min-width:2.6em;border-bottom:3px solid var(--sand);color:transparent;line-height:1.1;margin-inline:.12em;transition:color .4s,border-color .4s}
+.qtext .gap.filled,.qtext .fill{color:var(--sage)}
+.qtext .gap.filled{border-color:transparent;min-width:0;animation:pop .5s var(--ease)}
+.qtext .fill{display:inline-block;animation:pop .5s var(--ease)}
+@keyframes pop{from{opacity:.001;transform:translateY(8px) scale(.9)}to{opacity:1;transform:none}}
+
+.opts{display:grid;grid-template-columns:1fr;gap:10px}
+.opts.two{grid-template-columns:1fr 1fr}
+@media (min-width:700px){.opts.grid{grid-template-columns:1fr 1fr}}
+.opt{display:flex;align-items:center;gap:12px;min-height:58px;padding:12px 16px;border-radius:18px;text-align:start;font-size:16.5px;font-weight:500;line-height:1.55;color:var(--silk);
+  background:rgba(38,44,24,.5);box-shadow:inset 0 0 0 1px rgba(255,248,225,.18);transition:transform .2s var(--ease),background .25s,box-shadow .25s,opacity .3s,color .25s}
+.opt .k{flex:none;width:28px;height:28px;border-radius:50%;display:grid;place-items:center;font-size:13px;color:var(--silk-dim);background:rgba(255,255,255,.08);transition:background .25s,color .25s}
+.opt .k svg{width:16px;height:16px}
+.opts.two .opt{justify-content:center;min-height:68px;font-family:var(--font-display);font-size:20px}
+@media (hover:hover){.opt:not(:disabled):hover{transform:translateY(-2px);background:rgba(60,68,38,.7);box-shadow:inset 0 0 0 1px rgba(255,248,225,.4)}}
+.opt:not(:disabled):active{transform:scale(.975)}
+.opt:disabled{cursor:default}
+.opt.dim{opacity:.45}
+.opt.right{background:var(--sage);color:var(--olive-deep);box-shadow:0 12px 30px -16px rgba(217,226,180,.7);animation:right .55s var(--ease)}
+.opt.right .k{background:var(--olive-deep);color:var(--sage)}
+.opt.wrong{background:rgba(240,184,166,.14);color:#f5c4b4;box-shadow:inset 0 0 0 1.5px var(--blush);animation:shake .4s ease-in-out}
+.opt.wrong .k{background:var(--blush);color:#3d2a22}
+@keyframes right{0%{transform:scale(1)}40%{transform:scale(1.035)}100%{transform:scale(1)}}
+@keyframes shake{20%{transform:translateX(6px)}40%{transform:translateX(-5px)}60%{transform:translateX(3px)}80%{transform:translateX(-2px)}}
+
+.after{display:flex;flex-direction:column;gap:12px;animation:rise .45s var(--ease) both}
+.fb{display:flex;gap:12px;align-items:flex-start;padding:14px 16px;border-radius:18px;background:rgba(38,44,24,.6);box-shadow:inset 0 0 0 1px rgba(255,248,225,.14)}
+.fb>i{flex:none;width:34px;height:34px;padding:8px;border-radius:50%;background:var(--sage);color:var(--olive-deep)}
+.fb.no>i{background:var(--blush);color:#3d2a22}
+.fb-body{min-width:0;flex:1}
+.fb-head{display:flex;align-items:baseline;justify-content:space-between;gap:10px}
+.fb-head b{font-family:var(--font-display);font-size:18px;font-weight:700;color:var(--sage)}
+.fb.no .fb-head b{color:#f5c4b4}
+.fb-head span{font-size:13px;color:var(--gold);white-space:nowrap;font-variant-numeric:tabular-nums}
+.fb p{margin:2px 0 0;font-size:14.5px;color:var(--silk-dim)}
+.fb p.full{color:var(--silk);font-weight:500;font-size:15.5px}
+.next{width:100%;min-height:56px;font-size:16px;font-weight:600}
+.keys{margin:2px 0 0;text-align:center;font-size:12px;color:rgba(239,230,210,.45)}
+@media (hover:none){.keys{display:none}}
+
+/* result */
+.result{align-items:center;text-align:center;gap:14px;padding-top:clamp(18px,4vh,40px)}
+.ring{position:relative;width:176px;height:176px;margin-top:4px}
+.ring svg{width:100%;height:100%;transform:rotate(-90deg)}
+.ring circle{fill:none;stroke-width:9;stroke-linecap:round}
+.ring .tr{stroke:rgba(239,230,210,.14)}
+.ring .pr{stroke:url(#rg);stroke-dasharray:502.65;stroke-dashoffset:502.65;transition:stroke-dashoffset 1.4s var(--ease) .25s}
+.ring .mid{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;line-height:1.2}
+.ring .mid b{font-family:var(--font-display);font-size:50px;font-weight:700;color:var(--silk);font-variant-numeric:tabular-nums}
+.ring .mid span{font-size:12.5px;color:var(--silk-dim)}
+.rank{font-size:clamp(34px,8vw,54px);line-height:1.3}
+.rank .g{color:transparent;background:linear-gradient(180deg,#fff 10%,#cdbf9f 95%);-webkit-background-clip:text;background-clip:text}
+.rank-msg{margin:0;max-width:30rem;font-size:16px;color:var(--silk);text-wrap:balance}
+.record{font-size:13.5px;color:var(--gold);min-height:1.7em;margin:0}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;width:100%;margin:2px 0 0;padding:0;list-style:none}
+.stats li{padding:12px 6px;border-radius:18px;background:rgba(38,44,24,.42)}
+.stats b{display:block;font-family:var(--font-display);font-size:26px;font-weight:700;line-height:1.3;color:var(--silk);font-variant-numeric:tabular-nums}
+.stats span{font-size:12.5px;color:var(--silk-dim)}
+.stats .ok b{color:var(--sage)}.stats .no b{color:#f5c4b4}
+.r-ctas{display:flex;flex-direction:column;gap:10px;width:100%;margin-top:4px}
+.r-ctas .btn{width:100%}
+.r-row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.review{width:100%;text-align:start;border-radius:22px;padding:4px 18px;background:rgba(38,44,24,.42)}
+.review summary{cursor:pointer;padding:12px 0;font-weight:500;font-size:15px;color:var(--silk);list-style:none;display:flex;justify-content:space-between;align-items:center;min-height:48px}
+.review summary::-webkit-details-marker{display:none}
+.review summary::after{content:'';width:9px;height:9px;border:solid var(--silk-dim);border-width:0 2px 2px 0;transform:rotate(45deg);transition:transform .3s var(--ease);margin-inline-end:4px}
+.review[open] summary::after{transform:rotate(-135deg)}
+.review summary:focus-visible{outline:2px solid var(--silk);outline-offset:3px;border-radius:8px}
+.review ol{margin:0;padding:0 0 12px;list-style:none;display:flex;flex-direction:column;gap:12px}
+.review li{padding-top:12px;border-top:1px solid var(--line)}
+.review li small{display:block;font-size:12px;color:var(--sand);letter-spacing:.04em}
+.review li b{display:block;font-weight:500;font-size:15.5px;color:var(--silk)}
+.review li span{display:block;font-size:13.5px;color:var(--silk-dim)}
+.home-link{color:var(--silk-dim);font-size:13.5px;text-decoration:none;padding:10px;border-radius:8px}
+.home-link:hover{color:#fff}
+
+/* celebration: silk strips fall once, transform-only */
+.fete{position:fixed;inset:0;z-index:30;pointer-events:none;overflow:hidden}
+.fete i{position:absolute;top:-24px;left:var(--x);width:var(--w);height:var(--h);border-radius:2px;background:var(--c);opacity:.9;animation:fall var(--d) var(--dl) cubic-bezier(.3,.2,.5,1) both}
+@keyframes fall{from{transform:translate3d(0,0,0) rotate(0)}to{transform:translate3d(var(--dx),108vh,0) rotate(var(--r));opacity:0}}
+
+.toast{position:fixed;z-index:50;bottom:max(22px,env(safe-area-inset-bottom,0px));left:50%;transform:translate(-50%,20px);opacity:0;padding:10px 20px;border-radius:999px;background:var(--silk);color:var(--olive-deep);font-size:14px;font-weight:500;transition:opacity .3s,transform .4s var(--ease);pointer-events:none;white-space:nowrap}
+.toast.on{opacity:1;transform:translate(-50%,0)}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+
+@media (max-width:760px){
+  /* same lightening the site applies on phones */
+  .liquid-glass{-webkit-backdrop-filter:none;backdrop-filter:none}
+  .top{background:rgba(38,44,24,.95)}
+  .brand span{display:none}
+}
+@media (max-width:380px){.stats{grid-template-columns:1fr 1fr}.pill{padding:8px 14px}}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+
+<canvas id="bg" aria-hidden="true"></canvas>
+<div class="pattern"></div>
+<div class="vignette"></div>
+<div class="grain"></div>
+
+<main>
+  <div class="wrap">
+
+    <nav class="top" aria-label="شريط اللعبة">
+      <a class="brand" href="index.html" aria-label="همة لإعداد القادة، الصفحة الرئيسية"><img src="logo.webp" alt=""><span>قدّها؟</span></a>
+      <div class="top-side">
+        <span class="score-chip liquid-glass" id="scoreChip" hidden><b id="scoreNow">0</b> نقطة</span>
+        <button class="pill quiet" id="quitBtn" type="button" hidden>خروج</button>
+        <a class="pill" id="siteLink" href="index.html">موقع همة</a>
+      </div>
+    </nav>
+
+    <!-- 1: welcome -->
+    <section class="screen hero" id="s-home" aria-labelledby="homeTitle">
+      <img class="logo-big" src="logo.webp" alt="همة لإعداد القادة" width="230" height="165">
+      <span class="tag liquid-glass">تحدي الأمثال والكلمات</span>
+      <h1 class="title" id="homeTitle" tabindex="-1"><span class="w g">قدّها؟</span></h1>
+      <p class="statement">أمثالنا وسوالفنا وكلماتنا في تحدٍّ واحد. جاوب، اجمع النقاط، وأثبت أنك قدّها.</p>
+      <div class="ctas">
+        <button class="btn btn-main" id="startBtn" type="button">
+          ابدأ التحدي
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5"/><path d="m12 19-7-7 7-7"/></svg>
+        </button>
+        <ul class="facts"><li><b>5</b>أنماط لعب</li><li><b>3</b>مستويات</li><li><b id="factCount">60</b>سؤالًا</li></ul>
+        <div class="best-line" id="bestLine"></div>
+      </div>
+    </section>
+
+    <!-- 2: modes -->
+    <section class="screen" id="s-modes" aria-labelledby="modesTitle" hidden>
+      <div class="sec-head">
+        <span class="eyebrow">اختر تحديك</span>
+        <h2 id="modesTitle" tabindex="-1">كيف تبي تلعب؟</h2>
+      </div>
+      <button class="mode feature" type="button" data-mode="mixed" style="--n:0">
+        <i data-i="spark"></i>
+        <div><b>التحدي المتنوع</b><span>كل الأنماط في جولة واحدة، تبدأ سهلة وتشتدّ</span></div>
+        <em>10 أسئلة</em>
+      </button>
+      <div class="mode-grid" id="modeGrid"></div>
+      <button class="switch liquid-glass" id="timerSwitch" type="button" role="switch" aria-checked="false">
+        <div><b>مؤقت لكل سؤال</b><span>اختياري: الإجابة السريعة تكسب نقاطًا إضافية</span></div>
+        <i class="knob" aria-hidden="true"></i>
+      </button>
+    </section>
+
+    <!-- 3: play -->
+    <section class="screen" id="s-play" aria-label="السؤال" hidden>
+      <div class="hud">
+        <div class="steps" id="steps" aria-hidden="true"></div>
+        <span class="count" id="count"></span>
+      </div>
+      <div class="timer" id="timer" hidden><div class="rail"><i></i></div><b id="timerNum" aria-hidden="true"></b></div>
+      <div class="qwrap" id="qwrap">
+        <div class="qcard liquid-glass">
+          <div class="qmeta"><span class="eyebrow" id="qType"></span><span class="lvl" id="qLvl"></span></div>
+          <p class="qhint" id="qHint"></p>
+          <h2 class="qtext" id="qText" tabindex="-1"></h2>
+        </div>
+        <div class="opts" id="opts" role="group" aria-labelledby="qHint"></div>
+        <div class="after" id="after" hidden>
+          <div class="fb" id="fb">
+            <i id="fbIcon"></i>
+            <div class="fb-body">
+              <div class="fb-head"><b id="fbTitle"></b><span id="fbPts"></span></div>
+              <p class="full" id="fbFull"></p>
+              <p id="fbNote"></p>
+            </div>
+          </div>
+          <button class="btn btn-main next" id="nextBtn" type="button"></button>
+          <p class="keys">اختر بالأرقام 1 إلى 4، وانتقل بـ Enter</p>
+        </div>
+      </div>
+      <div class="sr" id="live" aria-live="assertive"></div>
+    </section>
+
+    <!-- 4: result -->
+    <section class="screen result" id="s-result" aria-labelledby="rankTitle" hidden>
+      <span class="eyebrow" id="resMode"></span>
+      <div class="ring">
+        <svg viewBox="0 0 176 176" aria-hidden="true"><defs><linearGradient id="rg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fffbea"/><stop offset="1" stop-color="#d9cba6"/></linearGradient></defs>
+          <circle class="tr" cx="88" cy="88" r="80"/><circle class="pr" id="ringArc" cx="88" cy="88" r="80"/></svg>
+        <div class="mid"><b id="resPct">0%</b><span>إجابات صحيحة</span></div>
+      </div>
+      <h2 class="rank" id="rankTitle" tabindex="-1"></h2>
+      <p class="rank-msg" id="rankMsg"></p>
+      <p class="record" id="record"></p>
+      <ul class="stats">
+        <li><b id="stScore">0</b><span>النقاط</span></li>
+        <li class="ok"><b id="stOk">0</b><span>صحيحة</span></li>
+        <li class="no"><b id="stNo">0</b><span>خاطئة</span></li>
+        <li><b id="stStreak">0</b><span>أطول سلسلة</span></li>
+      </ul>
+      <details class="review" id="review" hidden>
+        <summary>راجع الأسئلة اللي فاتتك</summary>
+        <ol id="reviewList"></ol>
+      </details>
+      <div class="r-ctas">
+        <button class="btn btn-main" id="againBtn" type="button">العب مرة ثانية</button>
+        <div class="r-row">
+          <button class="btn btn-ghost liquid-glass" id="modesBtn" type="button">غيّر النمط</button>
+          <button class="btn btn-ghost liquid-glass" id="shareBtn" type="button">شارك نتيجتك</button>
+        </div>
+      </div>
+      <a class="home-link" href="index.html">ارجع إلى موقع همة</a>
+    </section>
+
+  </div>
+</main>
+
+<div class="toast" id="toast" role="status"></div>
+
+<script src="game-questions.js"></script>
+<script>
+(function(){
+  'use strict';
+  var $=function(id){return document.getElementById(id)};
+  var still=matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* ── icons: same stroke family as the site ── */
+  var P={
+    spark:'<path d="M12 3l1.9 5.6L19.5 10l-5.6 1.9L12 17.5l-1.9-5.6L4.5 10l5.6-1.4z"/><path d="M19 16v4M17 18h4"/>',
+    complete:'<path d="M4 7h16M4 12h10M4 17h6"/><path d="M15 17h.01M18 17h.01"/>',
+    truefalse:'<path d="m4 8 2.5 2.5L11 6"/><path d="m14 14 5 5M19 14l-5 5"/>',
+    blank:'<path d="M3 8h5M16 8h5"/><rect x="9.5" y="5" width="5" height="6" rx="1.2"/><path d="M3 16h18"/>',
+    word:'<path d="M4 5h11a3 3 0 0 1 3 3v11H7a3 3 0 0 1-3-3z"/><path d="M8 10h6M8 14h4"/>',
+    meaning:'<path d="M12 3a6 6 0 0 0-3.5 10.9V16h7v-2.1A6 6 0 0 0 12 3z"/><path d="M9.5 20h5"/>',
+    check:'<path d="m5 12.5 4.5 4.5L19 7.5"/>',
+    x:'<path d="M6 6l12 12M18 6 6 18"/>',
+    clock:'<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>'
+  };
+  function icon(n,w){return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="'+(w||1.8)+'" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">'+P[n]+'</svg>'}
+  function paintIcons(root){[].forEach.call(root.querySelectorAll('[data-i]'),function(el){el.setAttribute('aria-hidden','true');el.innerHTML=icon(el.dataset.i)})}
+
+  /* ── game data ── */
+  var BANK=(window.HIMMA_QUESTIONS||[]).map(function(q,i){q.id=i;return q});
+  var TYPES={
+    complete:{name:'أكمل المثل',desc:'نعطيك بداية المثل وأنت تكمله',hint:'اختر تكملة المثل'},
+    truefalse:{name:'صح أم محرّف؟',desc:'هل المثل بصيغته المعروفة أم تغيّر فيه شيء؟',hint:'هل هذه هي الصيغة المعروفة؟'},
+    blank:{name:'أكمل الفراغ',desc:'كلمة ناقصة من العبارة، اختر الصحيحة',hint:'اختر الكلمة الناقصة'},
+    word:{name:'وش معنى الكلمة؟',desc:'كلمات نقولها كل يوم، وش معناها؟',hint:'وش معنى هذه الكلمة؟'},
+    meaning:{name:'وش المقصود؟',desc:'افهم الحكمة اللي ورا العبارة',hint:'وش المقصود من هذه العبارة؟'}
+  };
+  var TYPE_KEYS=Object.keys(TYPES);
+  var LEVELS={1:'مبتدئ',2:'سهل',3:'متوسط'};
+  var POINTS=10, STREAK_AT=3, STREAK_BONUS=5, TIME_BONUS=5;
+  var SECONDS={meaning:25,word:20,complete:20,blank:20,truefalse:15};
+  var RANKS=[
+    {min:90,title:'قدّها وقدود',msg:'ما شاء الله عليك! الأمثال والكلمات لعبتك، وهذا مستوى القادة.'},
+    {min:70,title:'صاحب همّة',msg:'أداء قوي وباقي لك خطوة على القمة. جولة ثانية وتوصلها.'},
+    {min:40,title:'على الطريق',msg:'بداية طيبة، وكل جولة تزيد حصيلتك. جرّب مرة ثانية وشوف الفرق.'},
+    {min:0,title:'بداية المشوار',msg:'كل قائد بدأ من أول خطوة. راجع اللي فاتك وارجع أقوى.'}
+  ];
+
+  function shuffle(a){a=a.slice();for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1)),t=a[i];a[i]=a[j];a[j]=t}return a}
+  var store={
+    get:function(k){try{return JSON.parse(localStorage.getItem('himma-qadha-'+k))}catch(e){return null}},
+    set:function(k,v){try{localStorage.setItem('himma-qadha-'+k,JSON.stringify(v))}catch(e){}}
+  };
+
+  /* questions already played this visit are picked last, so replays feel fresh */
+  var seen={};
+  function pick(type,level,used){
+    var pool=BANK.filter(function(q){return q.type===type&&!used[q.id]});
+    var byLevel=pool.filter(function(q){return q.level===level});
+    if(byLevel.length)pool=byLevel;
+    var fresh=pool.filter(function(q){return !seen[q.id]});
+    if(fresh.length)pool=fresh;
+    var q=pool[Math.floor(Math.random()*pool.length)];
+    if(q)used[q.id]=1;
+    return q;
+  }
+  function buildRound(mode){
+    var used={},list=[],levels,types;
+    if(mode==='mixed'){
+      levels=[1,1,1,1,2,2,2,3,3,3];
+      var a=shuffle(TYPE_KEYS),b=shuffle(TYPE_KEYS);
+      if(b[0]===a[a.length-1]){b.push(b.shift())}
+      types=a.concat(b);
+    }else{
+      levels=[1,1,1,2,2,2,3,3];
+      types=levels.map(function(){return mode});
+    }
+    levels.forEach(function(lv,i){var q=pick(types[i],lv,used);if(q)list.push(q)});
+    return list;
+  }
+
+  /* ── state ── */
+  var S={mode:'mixed',timer:!!store.get('timer'),list:[],i:0,score:0,ok:0,no:0,streak:0,bestStreak:0,missed:[],locked:false};
+  var screens=['s-home','s-modes','s-play','s-result'];
+  function show(id,focusEl){
+    screens.forEach(function(s){$(s).hidden=(s!==id)});
+    var playing=id==='s-play';
+    document.body.classList.toggle('calm',id!=='s-home');
+    $('scoreChip').hidden=!playing;$('quitBtn').hidden=!playing;$('siteLink').hidden=playing;
+    window.scrollTo(0,0);
+    if(focusEl)focusEl.focus({preventScroll:true});
+  }
+
+  /* ── home ── */
+  $('factCount').textContent=BANK.length;
+  function bestLine(){
+    var b=store.get('best-mixed');
+    $('bestLine').textContent=b?'أفضل نتيجة لك في التحدي المتنوع: '+b.score+' نقطة':'';
+  }
+  bestLine();
+  $('startBtn').addEventListener('click',function(){show('s-modes',$('modesTitle'))});
+
+  /* ── modes ── */
+  $('modeGrid').innerHTML=TYPE_KEYS.map(function(k,n){
+    var t=TYPES[k];
+    return '<button class="mode liquid-glass" type="button" data-mode="'+k+'" style="--n:'+(n+1)+'"><i data-i="'+k+'"></i><div><b>'+t.name+'</b><span>'+t.desc+'</span></div><em>8 أسئلة</em></button>';
+  }).join('');
+  paintIcons(document);
+  [].forEach.call(document.querySelectorAll('[data-mode]'),function(b){b.addEventListener('click',function(){start(b.dataset.mode)})});
+  var sw=$('timerSwitch');
+  sw.setAttribute('aria-checked',String(S.timer));
+  sw.addEventListener('click',function(){S.timer=!S.timer;sw.setAttribute('aria-checked',String(S.timer));store.set('timer',S.timer)});
+
+  /* ── play ── */
+  function start(mode){
+    S.mode=mode;S.list=buildRound(mode);S.i=0;S.score=0;S.ok=0;S.no=0;S.streak=0;S.bestStreak=0;S.missed=[];
+    $('scoreNow').textContent='0';
+    $('steps').innerHTML=S.list.map(function(){return '<i></i>'}).join('');
+    $('timer').hidden=!S.timer;
+    show('s-play');
+    renderQ();
+  }
+  function esc(s){return String(s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
+  var cur=null;
+  function renderQ(){
+    var q=S.list[S.i],t=TYPES[q.type],wrap=$('qwrap');
+    S.locked=false;
+    $('count').textContent=(S.i+1)+' / '+S.list.length;
+    [].forEach.call($('steps').children,function(el,n){el.classList.toggle('now',n===S.i)});
+    $('qType').textContent=t.name;
+    $('qLvl').textContent=LEVELS[q.level];
+    $('qHint').textContent=t.hint;
+    var text=$('qText');
+    text.classList.toggle('long',q.q.length>30);
+    if(q.type==='blank')text.innerHTML='«'+esc(q.q).replace('____','<span class="gap" id="gap">ـــــ</span>')+'»';
+    else if(q.type==='word')text.textContent=q.q;
+    else text.textContent='«'+q.q+'»';
+    text.setAttribute('aria-label',q.type==='blank'?q.q.replace('____','فراغ'):q.q);
+
+    var opts;
+    if(q.type==='truefalse')opts=[{label:'صحيح',right:q.ok,ic:'check'},{label:'محرّف',right:!q.ok,ic:'x'}];
+    else opts=shuffle([{label:q.a,right:true}].concat(q.wrong.map(function(w){return {label:w,right:false}})));
+    cur={q:q,opts:opts};
+    var box=$('opts');
+    box.className='opts'+(q.type==='truefalse'?' two':(q.type==='meaning'?'':' grid'));
+    box.innerHTML=opts.map(function(o,n){
+      return '<button class="opt" type="button" data-n="'+n+'" style="--n:'+n+'"><span class="k">'+(o.ic?icon(o.ic,2.2):(n+1))+'</span><span>'+esc(o.label)+'</span></button>';
+    }).join('');
+    $('after').hidden=true;
+    $('live').textContent='';
+    wrap.classList.remove('out','in');void wrap.offsetWidth;wrap.classList.add('in');
+    window.scrollTo(0,0);
+    text.focus({preventScroll:true});
+    if(S.timer)startTimer(SECONDS[q.type]);
+  }
+  $('opts').addEventListener('click',function(e){
+    var b=e.target.closest('.opt');if(b)answer(+b.dataset.n);
+  });
+
+  var tick=null,tEnd=0,tTotal=0,tLeft=0;
+  function startTimer(sec){tTotal=tLeft=sec*1000;runTimer()}
+  function runTimer(){
+    stopTimer();tEnd=performance.now()+tLeft;
+    var el=$('timer'),bar=el.querySelector('.rail i');
+    function upd(){
+      tLeft=Math.max(0,tEnd-performance.now());
+      bar.style.setProperty('--t',(tLeft/tTotal).toFixed(3));
+      $('timerNum').textContent=Math.ceil(tLeft/1000);
+      el.classList.toggle('low',tLeft<=5000);
+      if(tLeft<=0){stopTimer();answer(-1)}
+    }
+    upd();tick=setInterval(upd,250);
+  }
+  function stopTimer(){if(tick){clearInterval(tick);tick=null}}
+
+  function answer(n){
+    if(S.locked||!cur)return;
+    S.locked=true;stopTimer();
+    var q=cur.q,opts=cur.opts,right=n>=0&&opts[n].right,btns=$('opts').children,gained=0,extra=[];
+    [].forEach.call(btns,function(b,k){
+      b.disabled=true;
+      if(opts[k].right){b.classList.add('right');b.querySelector('.k').innerHTML=icon('check',2.4)}
+      else if(k===n){b.classList.add('wrong');b.querySelector('.k').innerHTML=icon('x',2.4)}
+      else b.classList.add('dim');
+    });
+    if(right){
+      S.ok++;S.streak++;S.bestStreak=Math.max(S.bestStreak,S.streak);
+      gained=POINTS;
+      if(S.streak>=STREAK_AT){gained+=STREAK_BONUS;extra.push('سلسلة '+S.streak)}
+      if(S.timer){var tb=Math.ceil(tLeft/tTotal*TIME_BONUS);if(tb>0){gained+=tb;extra.push('سرعة')}}
+      S.score+=gained;
+      var sc=$('scoreNow');sc.textContent=S.score;sc.classList.remove('bump');void sc.offsetWidth;sc.classList.add('bump');
+      if(navigator.vibrate)try{navigator.vibrate(18)}catch(e){}
+    }else{
+      S.no++;S.streak=0;S.missed.push(q);
+      if(navigator.vibrate)try{navigator.vibrate([24,50,24])}catch(e){}
+    }
+    seen[q.id]=1;
+    $('steps').children[S.i].className=right?'ok':'no';
+
+    /* the card itself resolves into the full, known wording */
+    var text=$('qText');
+    if(q.type==='blank'){var g=$('gap');if(g){g.textContent=q.a;g.classList.add('filled')}}
+    else if(q.type==='complete'){text.innerHTML='«'+esc(q.q.replace(/…$/,''))+' <span class="fill">'+esc(q.a)+'</span>»'}
+    text.setAttribute('aria-label',q.full||q.q);
+
+    var correctLabel=q.type==='truefalse'?(q.ok?'صحيح':'محرّف'):q.a;
+    var title=right?['صح عليك!','كفو!','أحسنت!','إجابة موفقة!'][S.ok%4]:(n<0?'انتهى الوقت':'مو هذي');
+    $('fb').className='fb'+(right?'':' no');
+    $('fbIcon').innerHTML=icon(right?'check':(n<0?'clock':'x'),2.4);
+    $('fbTitle').textContent=title;
+    $('fbPts').textContent=right?('+'+gained+(extra.length?' · '+extra.join(' · '):'')):'';
+    var full='';
+    if(q.type==='truefalse')full=(q.ok?'الصيغة صحيحة: ':'الصيغة المعروفة: ')+'«'+q.full+'»';
+    else if(q.type==='word'||q.type==='meaning')full=right?'':'الإجابة الصحيحة: '+q.a;
+    else full=right?'':'الإجابة الصحيحة: «'+q.full+'»';
+    $('fbFull').textContent=full;$('fbFull').hidden=!full;
+    $('fbNote').textContent=q.note;
+    var last=S.i===S.list.length-1;
+    $('nextBtn').textContent=last?'شوف نتيجتك':'السؤال التالي';
+    $('after').hidden=false;
+    $('live').textContent=title+'. '+(right?'':'الإجابة الصحيحة: '+correctLabel+'. ')+(q.full&&q.type!=='word'?q.full+'. ':'')+q.note;
+    var nb=$('nextBtn');
+    nb.focus({preventScroll:true});
+    setTimeout(function(){
+      var r=nb.getBoundingClientRect();
+      if(r.bottom>innerHeight-12)window.scrollBy({top:r.bottom-innerHeight+22,behavior:still?'auto':'smooth'});
+    },still?0:260);
+  }
+  $('nextBtn').addEventListener('click',next);
+  function next(){
+    if(!S.locked)return;
+    if(S.i>=S.list.length-1){finish();return}
+    var wrap=$('qwrap');
+    S.i++;
+    if(still){renderQ();return}
+    S.locked=false;cur=null;
+    wrap.classList.remove('in');wrap.classList.add('out');
+    setTimeout(renderQ,210);
+  }
+  document.addEventListener('keydown',function(e){
+    if($('s-play').hidden||e.metaKey||e.ctrlKey||e.altKey)return;
+    if(!S.locked&&cur&&/^[1-4]$/.test(e.key)){var n=+e.key-1;if(n<cur.opts.length){e.preventDefault();answer(n)}}
+  });
+  $('quitBtn').addEventListener('click',function(){stopTimer();cur=null;show('s-modes',$('modesTitle'))});
+  /* a hidden tab should not burn the clock */
+  document.addEventListener('visibilitychange',function(){
+    if(!S.timer||S.locked||!cur||$('s-play').hidden)return;
+    if(document.hidden)stopTimer();else runTimer();
+  });
+
+  /* ── result ── */
+  var lastShare='';
+  function finish(){
+    var total=S.list.length,pct=Math.round(S.ok/total*100);
+    var rank=RANKS.filter(function(r){return pct>=r.min})[0];
+    var key='best-'+S.mode,prev=store.get(key),isRecord=S.score>0&&(!prev||S.score>prev.score);
+    if(isRecord)store.set(key,{score:S.score,pct:pct});
+    bestLine();
+    $('resMode').textContent=(S.mode==='mixed'?'التحدي المتنوع':TYPES[S.mode].name)+(S.timer?' · بالمؤقت':'');
+    $('rankTitle').innerHTML='<span class="g">'+rank.title+'</span>';
+    $('rankMsg').textContent=rank.msg;
+    $('record').textContent=isRecord?(prev?'رقم قياسي جديد! تجاوزت نتيجتك السابقة ('+prev.score+' نقطة)':'هذه أول نتيجة لك، حاول تكسرها في الجولة الجاية'):(prev?'أفضل نتيجة لك: '+prev.score+' نقطة':'');
+    $('stOk').textContent=S.ok;$('stNo').textContent=S.no;$('stStreak').textContent=S.bestStreak;
+    var rv=$('review');rv.hidden=!S.missed.length;rv.open=false;
+    $('reviewList').innerHTML=S.missed.map(function(q){
+      var head=q.type==='word'?(q.q+': '+q.a):(q.type==='meaning'?('«'+q.q+'»'):('«'+q.full+'»'));
+      var body=q.type==='meaning'?(q.a+'. '+q.note):q.note;
+      return '<li><small>'+TYPES[q.type].name+'</small><b>'+esc(head)+'</b><span>'+esc(body)+'</span></li>';
+    }).join('');
+    lastShare='جبت '+pct+'% ('+S.score+' نقطة) في تحدي «قدّها؟» من نادي همة لإعداد القادة، ولقبي «'+rank.title+'». تقدر تتحداني؟';
+    var arc=$('ringArc'),C=502.65;
+    arc.style.transition='none';arc.style.strokeDashoffset=C;
+    $('resPct').textContent='0%';$('stScore').textContent='0';
+    show('s-result',$('rankTitle'));
+    void arc.getBoundingClientRect();arc.style.transition='';
+    requestAnimationFrame(function(){arc.style.strokeDashoffset=C*(1-pct/100)});
+    countUp($('resPct'),pct,'%');countUp($('stScore'),S.score,'');
+    if(pct>=70&&!still)fete(pct>=90?44:26);
+  }
+  function countUp(el,to,suffix){
+    if(still||!to){el.textContent=to+suffix;return}
+    var t0=null,dur=1300;
+    requestAnimationFrame(function step(t){
+      if(t0===null)t0=t;
+      var u=Math.min(1,(t-t0)/dur),v=Math.round(to*(1-Math.pow(1-u,3)));
+      el.textContent=v+suffix;
+      if(u<1)requestAnimationFrame(step);
+    });
+  }
+  function fete(n){
+    var box=document.createElement('div'),cols=['#efe6d2','#d9cba6','#e2c47c','#d9e2b4','#fffbea'],h='';
+    box.className='fete';box.setAttribute('aria-hidden','true');
+    for(var i=0;i<n;i++){
+      h+='<i style="--x:'+(Math.random()*100).toFixed(1)+'%;--w:'+(5+Math.random()*5).toFixed(0)+'px;--h:'+(12+Math.random()*16).toFixed(0)+'px;--c:'+cols[i%cols.length]+
+         ';--d:'+(2.2+Math.random()*1.8).toFixed(2)+'s;--dl:'+(Math.random()*.7).toFixed(2)+'s;--dx:'+(Math.random()*160-80).toFixed(0)+'px;--r:'+(Math.random()*900-450).toFixed(0)+'deg"></i>';
+    }
+    box.innerHTML=h;document.body.appendChild(box);
+    setTimeout(function(){box.remove()},5200);
+  }
+  $('againBtn').addEventListener('click',function(){start(S.mode)});
+  $('modesBtn').addEventListener('click',function(){show('s-modes',$('modesTitle'))});
+  var toastT;
+  function toast(msg){var t=$('toast');t.textContent=msg;t.classList.add('on');clearTimeout(toastT);toastT=setTimeout(function(){t.classList.remove('on')},2400)}
+  $('shareBtn').addEventListener('click',function(){
+    var url=location.href.split('#')[0].split('?')[0];
+    if(navigator.share){navigator.share({title:'قدّها؟ · تحدي همة',text:lastShare,url:url}).catch(function(){});return}
+    var text=lastShare+' '+url;
+    if(navigator.clipboard&&navigator.clipboard.writeText)navigator.clipboard.writeText(text).then(function(){toast('انتسخت النتيجة، شاركها مع أصحابك')},function(){toast('ما قدرنا ننسخ النتيجة')});
+    else toast('المشاركة غير متاحة في هذا المتصفح');
+  });
+
+  /* ── background: the site's silk field (same drawing, without scroll and pointer tracking) ── */
+  (function(){
+    var c=$('bg'),x=c.getContext('2d');if(!x)return;
+    var w,h,dpr,t0=null,tk=0;
+    var lite=matchMedia('(max-width:760px)').matches||(navigator.hardwareConcurrency||8)<=4;
+    var ribbons=[
+      {y:.30,amp:.13,f:1.15,sp:.00010,ph:0,  width:.085,tw:2.2,alpha:.55},
+      {y:.62,amp:.10,f:.85, sp:.00007,ph:2.4,width:.06, tw:1.6,alpha:.38},
+      {y:.88,amp:.08,f:1.5, sp:.00012,ph:4.1,width:.045,tw:2.8,alpha:.28}
+    ];
+    var dust=[];
+    function makeDust(){
+      var n=Math.round(Math.min(lite?26:90,(innerWidth*innerHeight)/16000));dust=[];
+      for(var i=0;i<n;i++)dust.push({x:Math.random()*w,y:Math.random()*h,r:(Math.random()*1.6+.4)*dpr,v:(Math.random()*.15+.05)*dpr,tw:Math.random()*6.28,d:Math.random()*.5+.5});
+    }
+    function size(){
+      var d=Math.min(devicePixelRatio||1,lite?1:1.5);
+      if(lite&&w&&Math.abs(innerWidth*d-w)<1&&Math.abs(innerHeight*d-h)<170*d)return;
+      dpr=d;w=c.width=innerWidth*dpr;h=c.height=innerHeight*dpr;makeDust();
+      if(still)draw(0);
+    }
+    function base(t){
+      var g=x.createLinearGradient(0,0,w*.4,h);
+      g.addColorStop(0,'#5d6a3a');g.addColorStop(.5,'#46502b');g.addColorStop(1,'#272d19');
+      x.fillStyle=g;x.fillRect(0,0,w,h);
+      for(var i=0;i<3;i++){
+        var ph=t*.00005*(i+1)+i*2,y0=h*(.15+i*.32);
+        x.beginPath();x.moveTo(0,y0);
+        for(var px=0;px<=w;px+=w/30){var k=px/w;x.lineTo(px,y0+Math.sin(k*Math.PI*(1+i*.4)+ph)*h*.18)}
+        x.lineTo(w,h);x.lineTo(0,h);x.closePath();
+        var lg=x.createLinearGradient(0,y0-h*.25,0,y0+h*.3);
+        lg.addColorStop(0,'rgba(140,152,96,0)');lg.addColorStop(.42,'rgba(140,152,96,.16)');
+        lg.addColorStop(.5,'rgba(30,36,18,.22)');lg.addColorStop(1,'rgba(30,36,18,0)');
+        x.fillStyle=lg;x.fill();
+      }
+    }
+    function ribbon(r,t,p){
+      if(p<=0)return;
+      var ph=t*r.sp+r.ph,N=lite?16:34,steps=lite?40:70,W=r.width*h,i0=Math.min(steps-1,Math.floor((1-p)*steps));
+      for(var s=0;s<N;s++){
+        var u=s/(N-1)-.5,lit=0;
+        x.beginPath();
+        for(var i=i0;i<=steps;i++){
+          var k=i/steps,px=-w*.05+k*w*1.1,twist=Math.cos(k*Math.PI*r.tw+ph*1.3);
+          var cy=h*r.y+Math.sin(k*Math.PI*r.f*2+ph)*h*r.amp+Math.sin(k*9+ph*2)*h*.012,py=cy+u*W*twist;
+          if(i===i0)x.moveTo(px,py);else x.lineTo(px,py);
+          lit+=Math.abs(twist);
+        }
+        lit/=(steps-i0);
+        var edge=1-Math.abs(u)*1.6,a=r.alpha*(.25+.75*lit)*Math.max(.15,edge)/N*5.5;
+        x.strokeStyle='rgba('+(232+lit*20|0)+','+(222+lit*18|0)+','+(194+lit*14|0)+','+a+')';
+        x.lineWidth=Math.max(1,W/N*1.6);x.stroke();
+      }
+    }
+    function sheen(t){
+      var hx=w*(.55+.25*Math.sin(t*.00006)),hy=h*(.28+.1*Math.cos(t*.00008));
+      var rg=x.createRadialGradient(hx,hy,0,hx,hy,Math.max(w,h)*.6);
+      rg.addColorStop(0,'rgba(244,234,204,.14)');rg.addColorStop(1,'rgba(244,234,204,0)');
+      x.fillStyle=rg;x.fillRect(0,0,w,h);
+    }
+    function motes(t){
+      for(var i=0;i<dust.length;i++){var p=dust[i];
+        if(!still){p.y-=p.v;p.x+=Math.sin(t*.0004+p.tw)*.15*dpr;if(p.y<-5){p.y=h+5;p.x=Math.random()*w}}
+        var a=(.35+.35*Math.sin(t*.002*p.d+p.tw))*p.d;
+        x.beginPath();x.arc(p.x,p.y,p.r,0,6.283);x.fillStyle='rgba(236,222,180,'+a+')';x.fill();
+      }
+    }
+    function draw(t){
+      t=t||0;
+      /* the game keeps the field calmer than the home page: half the frame rate everywhere */
+      if(!still&&(tk++&1)){requestAnimationFrame(draw);return}
+      if(t0===null)t0=t;
+      var el=still?1e9:t-t0,out=function(d,len){var u=Math.max(0,Math.min(1,(el-d)/len));return 1-Math.pow(1-u,4)};
+      var lightIn=out(300,2000);
+      base(t);
+      if(lightIn<1){x.fillStyle='rgba(20,24,12,'+((1-lightIn)*.5)+')';x.fillRect(0,0,w,h)}
+      x.globalCompositeOperation='lighter';
+      ribbons.forEach(function(r,j){ribbon(r,t,out(j*260,1900))});
+      x.globalCompositeOperation='source-over';
+      x.globalAlpha=lightIn;sheen(t);motes(t);x.globalAlpha=1;
+      if(!still&&!document.hidden)requestAnimationFrame(draw);
+    }
+    size();addEventListener('resize',size);
+    document.addEventListener('visibilitychange',function(){if(!document.hidden&&!still)requestAnimationFrame(draw)});
+    if(!still)requestAnimationFrame(draw);
+  })();
+})();
+</script>
+</body>
+</html>
