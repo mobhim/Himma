@@ -136,7 +136,7 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--silk);outline-offse
 .mode.feature>i{background:var(--olive-deep);color:var(--silk);box-shadow:none}
 .mode.feature:focus-visible{outline-color:#fff}
 .mode-grid{display:grid;grid-template-columns:1fr;gap:10px;margin-top:10px}
-.mode-grid .mode,.mode.feature{animation:rise .6s var(--ease) both;animation-delay:calc(var(--n,0)*55ms + 80ms)}
+.mode-grid .mode,.mode.feature,.mode.duo-card{animation:rise .6s var(--ease) both;animation-delay:calc(var(--n,0)*55ms + 80ms)}
 @media (min-width:700px){.mode-grid{grid-template-columns:1fr 1fr}.mode-grid .mode:last-child{grid-column:1/-1}}
 .switch{display:flex;align-items:center;gap:14px;width:100%;margin-top:14px;padding:14px 18px;border-radius:22px;text-align:start;min-height:64px}
 .switch b{display:block;font-weight:500;font-size:15px;color:var(--silk)}
@@ -248,6 +248,53 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--silk);outline-offse
 .home-link{color:var(--silk-dim);font-size:13.5px;text-decoration:none;padding:10px;border-radius:8px}
 .home-link:hover{color:#fff}
 
+/* two teams */
+:root{--ta:#fffbea;--tb:#e2c47c}
+.mode.duo-card{margin-top:10px}
+.team-grid{display:grid;grid-template-columns:1fr;gap:12px}
+@media (min-width:700px){.team-grid{grid-template-columns:1fr 1fr}}
+.team-card{padding:18px;border-radius:22px;background:rgba(38,44,24,.5);display:flex;flex-direction:column;gap:10px;border-top:3px solid var(--tc)}
+.team-card label{font-size:13px;color:var(--silk-dim)}
+.team-card input,.team-card textarea,.cert-box input,.cert-box textarea{width:100%;font:inherit;font-size:16px;color:var(--silk);background:rgba(20,24,12,.45);border:1px solid rgba(255,248,225,.22);border-radius:14px;padding:11px 14px;min-height:48px}
+.team-card textarea,.cert-box textarea{min-height:104px;resize:vertical;direction:ltr;text-align:left;line-height:1.7}
+.team-card input::placeholder,.team-card textarea::placeholder,.cert-box textarea::placeholder{color:rgba(239,230,210,.4)}
+.team-card input:focus-visible,.team-card textarea:focus-visible,.cert-box input:focus-visible,.cert-box textarea:focus-visible{outline:2px solid var(--silk);outline-offset:2px}
+.team-card input{font-family:var(--font-display);font-size:19px}
+.hint{margin:0;font-size:12.5px;color:var(--silk-dim);line-height:1.6}
+.hint.err{color:#f5c4b4}
+.setup-note{margin:14px 0 0;font-size:13.5px;color:var(--silk-dim)}
+.go{width:100%;margin-top:14px;min-height:56px;font-size:17px;font-weight:600}
+.duo-bar{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:8px;margin-top:16px}
+.dteam{display:flex;align-items:center;justify-content:space-between;gap:8px;min-width:0;padding:8px 14px;border-radius:16px;background:rgba(38,44,24,.5);box-shadow:inset 0 0 0 1px rgba(255,248,225,.14);opacity:.6;transition:opacity .35s,box-shadow .35s,transform .35s var(--ease)}
+.dteam span{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:14px;color:var(--silk)}
+.dteam span::before{content:'';display:inline-block;width:9px;height:9px;border-radius:50%;background:var(--tc);margin-inline-end:8px}
+.dteam b{font-family:var(--font-display);font-size:22px;font-weight:700;line-height:1.3;color:var(--silk);font-variant-numeric:tabular-nums;display:inline-block}
+.dteam b.bump{animation:bump .5s var(--ease)}
+.dteam.on{opacity:1;box-shadow:inset 0 0 0 2px var(--tc);transform:translateY(-1px)}
+.duo-bar .vs{font-size:12px;color:var(--silk-dim)}
+.turn{margin:0 0 2px;font-family:var(--font-display);font-size:17px;color:var(--tc);animation:rise .5s var(--ease) both}
+.turn small{font-family:var(--font-sans);font-size:12.5px;color:var(--silk-dim);margin-inline-end:6px}
+.stats.two{grid-template-columns:1fr 1fr}
+.stats.two li{border-top:3px solid var(--tc)}
+.stats.two li.win{background:rgba(60,68,38,.7)}
+.stats.two small{display:block;font-size:13.5px;color:var(--silk);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.cert-box{width:100%;text-align:start;border-radius:22px;padding:18px;background:rgba(38,44,24,.5);display:flex;flex-direction:column;gap:12px}
+.cert-box h3{margin:0;font-family:var(--font-display);font-weight:500;font-size:20px;color:var(--silk)}
+.cert-box canvas{width:100%;height:auto;border-radius:12px;display:block;box-shadow:0 18px 40px -22px rgba(10,12,6,.9)}
+.cert-list{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:6px}
+.cert-list li{display:flex;align-items:center;gap:10px;padding:8px 10px 8px 12px;border-radius:14px;background:rgba(20,24,12,.35);box-shadow:inset 0 0 0 1px transparent}
+.cert-list li.sel{box-shadow:inset 0 0 0 1px rgba(255,248,225,.35)}
+.cert-list .em{flex:1;min-width:0;direction:ltr;text-align:right;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:14.5px;color:var(--silk);min-height:40px;display:flex;align-items:center;justify-content:flex-end}
+.cert-list .st{flex:none;font-size:12.5px;color:var(--silk-dim)}
+.cert-list .st.ok{color:var(--sage)}.cert-list .st.no{color:#f5c4b4}
+.cert-list .dl{flex:none;min-height:40px;padding:6px 14px;border-radius:999px;font-size:13px;color:var(--silk);background:rgba(255,255,255,.08);box-shadow:inset 0 0 0 1px rgba(255,248,225,.16)}
+.cert-list .dl:hover{background:rgba(255,255,255,.14)}
+.pin-row{display:flex;gap:8px;align-items:stretch}
+.pin-row input{flex:1;min-width:0}
+.pin-row .btn{flex:none;min-height:48px;padding:10px 20px}
+.cert-box .btn{width:100%}
+.btn[disabled]{opacity:.55;cursor:default;transform:none}
+
 /* celebration: silk strips fall once, transform-only */
 .fete{position:fixed;inset:0;z-index:30;pointer-events:none;overflow:hidden}
 .fete i{position:absolute;top:-24px;left:var(--x);width:var(--w);height:var(--h);border-radius:2px;background:var(--c);opacity:.9;animation:fall var(--d) var(--dl) cubic-bezier(.3,.2,.5,1) both}
@@ -263,7 +310,7 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--silk);outline-offse
   .top{background:rgba(38,44,24,.95)}
   .brand span{display:none}
 }
-@media (max-width:380px){.stats{grid-template-columns:1fr 1fr}.pill{padding:8px 14px}}
+@media (max-width:380px){.stats{grid-template-columns:1fr 1fr}.pill{padding:8px 14px}.dteam span{font-size:12.5px}}
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 </style>
 </head>
@@ -313,6 +360,11 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--silk);outline-offse
         <div><b>التحدي المتنوع</b><span>كل الأنماط في جولة واحدة، تبدأ سهلة وتشتدّ</span></div>
         <em>10 أسئلة</em>
       </button>
+      <button class="mode liquid-glass duo-card" type="button" id="duoBtn" style="--n:1">
+        <i data-i="teams"></i>
+        <div><b>تحدي الفريقين</b><span>فريقان يتناوبان على شاشة واحدة، والفائز له شهادة</span></div>
+        <em>16 سؤالًا</em>
+      </button>
       <div class="mode-grid" id="modeGrid"></div>
       <button class="switch liquid-glass" id="timerSwitch" type="button" role="switch" aria-checked="false">
         <div><b>مؤقت لكل سؤال</b><span>اختياري: الإجابة السريعة تكسب نقاطًا إضافية</span></div>
@@ -320,8 +372,45 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--silk);outline-offse
       </button>
     </section>
 
+    <!-- 2b: two-team setup -->
+    <section class="screen" id="s-teams" aria-labelledby="teamsTitle" hidden>
+      <div class="sec-head">
+        <span class="eyebrow">تحدي الفريقين</span>
+        <h2 id="teamsTitle" tabindex="-1">جهّزوا الفريقين</h2>
+      </div>
+      <form id="teamsForm" novalidate>
+        <div class="team-grid">
+          <div class="team-card liquid-glass" style="--tc:var(--ta)">
+            <label for="tName0">اسم الفريق الأول</label>
+            <input id="tName0" type="text" maxlength="24" autocomplete="off" placeholder="الفريق الأول">
+            <label for="tMail0">إيميلات الأعضاء، كل إيميل في سطر</label>
+            <textarea id="tMail0" inputmode="email" autocapitalize="off" autocomplete="off" spellcheck="false" placeholder="name@example.com" aria-describedby="tHint0"></textarea>
+            <p class="hint" id="tHint0"></p>
+          </div>
+          <div class="team-card liquid-glass" style="--tc:var(--tb)">
+            <label for="tName1">اسم الفريق الثاني</label>
+            <input id="tName1" type="text" maxlength="24" autocomplete="off" placeholder="الفريق الثاني">
+            <label for="tMail1">إيميلات الأعضاء، كل إيميل في سطر</label>
+            <textarea id="tMail1" inputmode="email" autocapitalize="off" autocomplete="off" spellcheck="false" placeholder="name@example.com" aria-describedby="tHint1"></textarea>
+            <p class="hint" id="tHint1"></p>
+          </div>
+        </div>
+        <p class="setup-note">كل فريق يجاوب على 8 أسئلة بالتناوب، والأعلى نقاطًا يفوز. شهادة الفوز تصدر لكل إيميل في الفريق الفائز، والإيميلات تُستخدم للشهادات فقط ولا تُحفظ في الجهاز.</p>
+        <button class="switch liquid-glass" id="timerSwitch2" type="button" role="switch" aria-checked="false">
+          <div><b>مؤقت لكل سؤال</b><span>اختياري: الإجابة السريعة تكسب نقاطًا إضافية</span></div>
+          <i class="knob" aria-hidden="true"></i>
+        </button>
+        <button class="btn btn-main go" type="submit">ابدأ المواجهة</button>
+      </form>
+    </section>
+
     <!-- 3: play -->
     <section class="screen" id="s-play" aria-label="السؤال" hidden>
+      <div class="duo-bar" id="duoBar" hidden>
+        <div class="dteam" id="dTeam0" style="--tc:var(--ta)"><span></span><b>0</b></div>
+        <i class="vs" aria-hidden="true">ضد</i>
+        <div class="dteam" id="dTeam1" style="--tc:var(--tb)"><span></span><b>0</b></div>
+      </div>
       <div class="hud">
         <div class="steps" id="steps" aria-hidden="true"></div>
         <span class="count" id="count"></span>
@@ -329,6 +418,7 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--silk);outline-offse
       <div class="timer" id="timer" hidden><div class="rail"><i></i></div><b id="timerNum" aria-hidden="true"></b></div>
       <div class="qwrap" id="qwrap">
         <div class="qcard liquid-glass">
+          <p class="turn" id="turn" hidden></p>
           <div class="qmeta"><span class="eyebrow" id="qType"></span><span class="lvl" id="qLvl"></span></div>
           <p class="qhint" id="qHint"></p>
           <h2 class="qtext" id="qText" tabindex="-1"></h2>
@@ -348,6 +438,40 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--silk);outline-offse
         </div>
       </div>
       <div class="sr" id="live" aria-live="assertive"></div>
+    </section>
+
+    <!-- 4b: two-team result -->
+    <section class="screen result" id="s-duores" aria-labelledby="duoTitle" hidden>
+      <span class="eyebrow">نتيجة المواجهة</span>
+      <h2 class="rank" id="duoTitle" tabindex="-1"></h2>
+      <p class="rank-msg" id="duoMsg"></p>
+      <ul class="stats two" id="duoStats"></ul>
+      <div class="cert-box" id="certBox">
+        <h3 id="certHead">شهادات الفريق الفائز</h3>
+        <canvas id="certCanvas" width="1600" height="1131" role="img" aria-label="معاينة شهادة الفوز"></canvas>
+        <ul class="cert-list" id="certList"></ul>
+        <div id="addWrap" hidden>
+          <label class="hint" for="addMails">ما سُجّلت إيميلات للفريق الفائز. أضفها هنا، كل إيميل في سطر:</label>
+          <textarea id="addMails" inputmode="email" autocapitalize="off" autocomplete="off" spellcheck="false" placeholder="name@example.com"></textarea>
+          <button class="btn btn-ghost liquid-glass" id="addBtn" type="button">أضف الإيميلات</button>
+        </div>
+        <div id="pinWrap" hidden>
+          <label class="hint" for="pinInput">رمز المنظّم مطلوب لإرسال الشهادات:</label>
+          <div class="pin-row">
+            <input id="pinInput" type="password" inputmode="numeric" autocomplete="off">
+            <button class="btn btn-main" id="pinBtn" type="button">أرسل</button>
+          </div>
+        </div>
+        <button class="btn btn-main" id="sendBtn" type="button">أرسل الشهادات إلى الإيميلات</button>
+        <p class="hint" id="certNote" role="status"></p>
+      </div>
+      <div class="r-ctas">
+        <div class="r-row">
+          <button class="btn btn-ghost liquid-glass" id="rematchBtn" type="button">مواجهة ثانية</button>
+          <button class="btn btn-ghost liquid-glass" id="duoModesBtn" type="button">غيّر النمط</button>
+        </div>
+      </div>
+      <a class="home-link" href="index.html">ارجع إلى موقع همة</a>
     </section>
 
     <!-- 4: result -->
@@ -386,6 +510,7 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--silk);outline-offse
 
 <div class="toast" id="toast" role="status"></div>
 
+<script src="game-config.js"></script>
 <script src="game-questions.js"></script>
 <script>
 (function(){
@@ -403,7 +528,8 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--silk);outline-offse
     meaning:'<path d="M12 3a6 6 0 0 0-3.5 10.9V16h7v-2.1A6 6 0 0 0 12 3z"/><path d="M9.5 20h5"/>',
     check:'<path d="m5 12.5 4.5 4.5L19 7.5"/>',
     x:'<path d="M6 6l12 12M18 6 6 18"/>',
-    clock:'<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>'
+    clock:'<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>',
+    teams:'<circle cx="8" cy="8" r="3"/><circle cx="17" cy="9" r="2.5"/><path d="M2.5 19c.6-3.2 2.7-5 5.5-5s4.900 1.800 5.500 5M15 14.200c.6-.2 1.300-.2 2-.2 2.300 0 4 1.500 4.500 4"/>'
   };
   function icon(n,w){return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="'+(w||1.8)+'" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">'+P[n]+'</svg>'}
   function paintIcons(root){[].forEach.call(root.querySelectorAll('[data-i]'),function(el){el.setAttribute('aria-hidden','true');el.innerHTML=icon(el.dataset.i)})}
@@ -463,12 +589,12 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--silk);outline-offse
 
   /* ── state ── */
   var S={mode:'mixed',timer:!!store.get('timer'),list:[],i:0,score:0,ok:0,no:0,streak:0,bestStreak:0,missed:[],locked:false};
-  var screens=['s-home','s-modes','s-play','s-result'];
+  var screens=['s-home','s-modes','s-teams','s-play','s-duores','s-result'];
   function show(id,focusEl){
     screens.forEach(function(s){$(s).hidden=(s!==id)});
     var playing=id==='s-play';
     document.body.classList.toggle('calm',id!=='s-home');
-    $('scoreChip').hidden=!playing;$('quitBtn').hidden=!playing;$('siteLink').hidden=playing;
+    $('scoreChip').hidden=!playing||!!S.duo;$('quitBtn').hidden=!playing;$('siteLink').hidden=playing;
     window.scrollTo(0,0);
     if(focusEl)focusEl.focus({preventScroll:true});
   }
@@ -485,16 +611,18 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--silk);outline-offse
   /* ── modes ── */
   $('modeGrid').innerHTML=TYPE_KEYS.map(function(k,n){
     var t=TYPES[k];
-    return '<button class="mode liquid-glass" type="button" data-mode="'+k+'" style="--n:'+(n+1)+'"><i data-i="'+k+'"></i><div><b>'+t.name+'</b><span>'+t.desc+'</span></div><em>8 أسئلة</em></button>';
+    return '<button class="mode liquid-glass" type="button" data-mode="'+k+'" style="--n:'+(n+2)+'"><i data-i="'+k+'"></i><div><b>'+t.name+'</b><span>'+t.desc+'</span></div><em>8 أسئلة</em></button>';
   }).join('');
   paintIcons(document);
   [].forEach.call(document.querySelectorAll('[data-mode]'),function(b){b.addEventListener('click',function(){start(b.dataset.mode)})});
-  var sw=$('timerSwitch');
-  sw.setAttribute('aria-checked',String(S.timer));
-  sw.addEventListener('click',function(){S.timer=!S.timer;sw.setAttribute('aria-checked',String(S.timer));store.set('timer',S.timer)});
+  var sws=[$('timerSwitch'),$('timerSwitch2')];
+  function paintSw(){sws.forEach(function(b){b.setAttribute('aria-checked',String(S.timer))})}
+  paintSw();
+  sws.forEach(function(b){b.addEventListener('click',function(){S.timer=!S.timer;paintSw();store.set('timer',S.timer)})});
 
   /* ── play ── */
   function start(mode){
+    S.duo=null;$('duoBar').hidden=true;$('turn').hidden=true;
     S.mode=mode;S.list=buildRound(mode);S.i=0;S.score=0;S.ok=0;S.no=0;S.streak=0;S.bestStreak=0;S.missed=[];
     $('scoreNow').textContent='0';
     $('steps').innerHTML=S.list.map(function(){return '<i></i>'}).join('');
@@ -507,6 +635,7 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--silk);outline-offse
   function renderQ(){
     var q=S.list[S.i],t=TYPES[q.type],wrap=$('qwrap');
     S.locked=false;
+    if(S.duo)paintTurn();
     $('count').textContent=(S.i+1)+' / '+S.list.length;
     [].forEach.call($('steps').children,function(el,n){el.classList.toggle('now',n===S.i)});
     $('qType').textContent=t.name;
@@ -559,6 +688,8 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--silk);outline-offse
     if(S.locked||!cur)return;
     S.locked=true;stopTimer();
     var q=cur.q,opts=cur.opts,right=n>=0&&opts[n].right,btns=$('opts').children,gained=0,extra=[];
+    /* in a two-team match the points go to the team whose turn it is */
+    var W=S.duo?S.duo.teams[S.duo.order[S.i]]:S;
     [].forEach.call(btns,function(b,k){
       b.disabled=true;
       if(opts[k].right){b.classList.add('right');b.querySelector('.k').innerHTML=icon('check',2.4)}
@@ -566,15 +697,15 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--silk);outline-offse
       else b.classList.add('dim');
     });
     if(right){
-      S.ok++;S.streak++;S.bestStreak=Math.max(S.bestStreak,S.streak);
+      W.ok++;W.streak++;W.bestStreak=Math.max(W.bestStreak,W.streak);
       gained=POINTS;
-      if(S.streak>=STREAK_AT){gained+=STREAK_BONUS;extra.push('سلسلة '+S.streak)}
+      if(W.streak>=STREAK_AT){gained+=STREAK_BONUS;extra.push('سلسلة '+W.streak)}
       if(S.timer){var tb=Math.ceil(tLeft/tTotal*TIME_BONUS);if(tb>0){gained+=tb;extra.push('سرعة')}}
-      S.score+=gained;
-      var sc=$('scoreNow');sc.textContent=S.score;sc.classList.remove('bump');void sc.offsetWidth;sc.classList.add('bump');
+      W.score+=gained;
+      var sc=S.duo?$('dTeam'+S.duo.order[S.i]).querySelector('b'):$('scoreNow');sc.textContent=W.score;sc.classList.remove('bump');void sc.offsetWidth;sc.classList.add('bump');
       if(navigator.vibrate)try{navigator.vibrate(18)}catch(e){}
     }else{
-      S.no++;S.streak=0;S.missed.push(q);
+      W.no++;W.streak=0;if(!S.duo)S.missed.push(q);
       if(navigator.vibrate)try{navigator.vibrate([24,50,24])}catch(e){}
     }
     seen[q.id]=1;
@@ -599,7 +730,7 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--silk);outline-offse
     $('fbFull').textContent=full;$('fbFull').hidden=!full;
     $('fbNote').textContent=q.note;
     var last=S.i===S.list.length-1;
-    $('nextBtn').textContent=last?'شوف نتيجتك':'السؤال التالي';
+    $('nextBtn').textContent=!last?'السؤال التالي':(S.duo?(duoTied()&&S.duo.tb<3?'سؤال الحسم':'شوفوا النتيجة'):'شوف نتيجتك');
     $('after').hidden=false;
     $('live').textContent=title+'. '+(right?'':'الإجابة الصحيحة: '+correctLabel+'. ')+(q.full&&q.type!=='word'?q.full+'. ':'')+q.note;
     var nb=$('nextBtn');
@@ -612,7 +743,11 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--silk);outline-offse
   $('nextBtn').addEventListener('click',next);
   function next(){
     if(!S.locked)return;
-    if(S.i>=S.list.length-1){finish();return}
+    if(S.i>=S.list.length-1){
+      if(!S.duo){finish();return}
+      if(!duoTied()){duoFinish();return}
+      if(!duoTiebreak())return;
+    }
     var wrap=$('qwrap');
     S.i++;
     if(still){renderQ();return}
@@ -625,6 +760,232 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--silk);outline-offse
     if(!S.locked&&cur&&/^[1-4]$/.test(e.key)){var n=+e.key-1;if(n<cur.opts.length){e.preventDefault();answer(n)}}
   });
   $('quitBtn').addEventListener('click',function(){stopTimer();cur=null;show('s-modes',$('modesTitle'))});
+
+  /* ── two teams on one screen ── */
+  var MAIL=/^[^\s@<>,;]+@[^\s@<>,;]+\.[^\s@<>,;]{2,}$/;
+  function parseMails(text){
+    var good=[],bad=[],dup={};
+    String(text||'').split(/[\s,;،]+/).forEach(function(m){
+      m=m.trim().toLowerCase();if(!m)return;
+      if(!MAIL.test(m)||m.length>120){bad.push(m);return}
+      if(!dup[m]){dup[m]=1;good.push(m)}
+    });
+    return {good:good,bad:bad};
+  }
+  $('duoBtn').addEventListener('click',function(){show('s-teams',$('teamsTitle'))});
+  $('teamsForm').addEventListener('submit',function(e){
+    e.preventDefault();
+    var teams=[],firstBad=null,all={};
+    [0,1].forEach(function(k){
+      var p=parseMails($('tMail'+k).value),hint=$('tHint'+k),msg='';
+      if(p.bad.length)msg='إيميل غير صحيح: '+p.bad.slice(0,2).join('، ');
+      else if(p.good.length>30)msg='الحد الأعلى 30 عضوًا لكل فريق.';
+      else if(p.good.some(function(m){return all[m]}))msg='فيه إيميل مكرر في الفريقين.';
+      p.good.forEach(function(m){all[m]=1});
+      hint.textContent=msg||(p.good.length?('عدد الأعضاء: '+p.good.length):'');
+      hint.className='hint'+(msg?' err':'');
+      $('tMail'+k).setAttribute('aria-invalid',msg?'true':'false');
+      if(msg&&!firstBad)firstBad=$('tMail'+k);
+      teams.push({name:($('tName'+k).value.trim()||(k?'الفريق الثاني':'الفريق الأول')).slice(0,24),emails:p.good});
+    });
+    if(firstBad){firstBad.focus();return}
+    if(teams[0].name===teams[1].name)teams[1].name=(teams[1].name+' 2').slice(0,24);
+    startDuo(teams);
+  });
+  [0,1].forEach(function(k){$('tMail'+k).addEventListener('input',function(){var h=$('tHint'+k);if(h.className!=='hint'){h.textContent='';h.className='hint';this.setAttribute('aria-invalid','false')}})});
+  function startDuo(teams){
+    var used={},list=[],order=[],levels=[1,1,1,2,2,2,3,3];
+    var types=shuffle(TYPE_KEYS).concat(shuffle(TYPE_KEYS)).slice(0,levels.length);
+    /* each pair is the same kind and level for both sides, and the opening turn alternates */
+    levels.forEach(function(lv,k){
+      var a=pick(types[k],lv,used),b=pick(types[k],lv,used);
+      if(a&&b){list.push(a,b);order.push(k%2,1-k%2)}
+    });
+    teams.forEach(function(t){t.score=0;t.ok=0;t.no=0;t.streak=0;t.bestStreak=0});
+    S.duo={teams:teams,order:order,tb:0,base:list.length};
+    S.mode='duo';S.list=list;S.i=0;
+    [0,1].forEach(function(k){var el=$('dTeam'+k);el.querySelector('span').textContent=teams[k].name;el.querySelector('b').textContent='0'});
+    $('duoBar').hidden=false;$('turn').hidden=false;
+    $('steps').innerHTML=list.map(function(){return '<i></i>'}).join('');
+    $('timer').hidden=!S.timer;
+    show('s-play');
+    renderQ();
+  }
+  function paintTurn(){
+    var k=S.duo.order[S.i],t=S.duo.teams[k],el=$('turn');
+    [0,1].forEach(function(n){$('dTeam'+n).classList.toggle('on',n===k)});
+    el.style.setProperty('--tc',k?'var(--tb)':'var(--ta)');
+    el.innerHTML='<small>'+(S.i>=S.duo.base?'سؤال الحسم، الدور على':'الدور على')+'</small>'+esc(t.name);
+    el.style.animation='none';void el.offsetWidth;el.style.animation='';
+  }
+  function duoTied(){return S.duo.teams[0].score===S.duo.teams[1].score}
+  /* a draw is settled by extra pairs, three at most; after that both sides share the win */
+  function duoTiebreak(){
+    var d=S.duo,used={};
+    if(d.tb>=3){duoFinish();return false}
+    S.list.forEach(function(q){used[q.id]=1});
+    var type=shuffle(TYPE_KEYS)[0],a=pick(type,3,used),b=pick(type,3,used);
+    if(!a||!b){duoFinish();return false}
+    d.tb++;S.list.push(a,b);d.order.push(d.tb%2,1-d.tb%2);
+    $('steps').insertAdjacentHTML('beforeend','<i></i><i></i>');
+    return true;
+  }
+
+  /* certificate: drawn on a canvas from the same identity, one per member e-mail */
+  var CERT={members:[],sel:0,pin:'',busy:false,logo:null};
+  var ENDPOINT=((window.HIMMA_GAME||{}).certEndpoint||'').trim();
+  function today(){try{return new Date().toLocaleDateString('ar-SA-u-ca-gregory-nu-latn',{year:'numeric',month:'long',day:'numeric'})}catch(e){return new Date().toISOString().slice(0,10)}}
+  function certReady(){
+    var jobs=[];
+    if(document.fonts&&document.fonts.load)jobs.push(document.fonts.load('700 90px "Reem Kufi"','شهادة'),document.fonts.load('500 30px "IBM Plex Sans Arabic"','شهادة'));
+    if(!CERT.logo)jobs.push(new Promise(function(res){var im=new Image();im.onload=function(){CERT.logo=im;res()};im.onerror=function(){res()};im.src='logo.webp'}));
+    return Promise.all(jobs).catch(function(){});
+  }
+  function fitText(x,text,font,size,max){
+    do{x.font=font.replace('%',size)}while(x.measureText(text).width>max&&(size-=2)>18);
+  }
+  function drawCert(c,m){
+    var x=c.getContext('2d'),w=c.width,h=c.height,d=S.duo,me=d.teams[m.team],other=d.teams[1-m.team],i,k;
+    var disp='"Reem Kufi","IBM Plex Sans Arabic",sans-serif',sans='"IBM Plex Sans Arabic","Segoe UI",Tahoma,sans-serif';
+    var g=x.createLinearGradient(0,0,w*.4,h);
+    g.addColorStop(0,'#5d6a3a');g.addColorStop(.5,'#46502b');g.addColorStop(1,'#272d19');
+    x.fillStyle=g;x.fillRect(0,0,w,h);
+    /* still silk ribbons, as in the site's field */
+    x.globalCompositeOperation='lighter';
+    [{y:.2,amp:.1,f:1.1,ph:.6,wd:.07,tw:2.2,al:.34},{y:.86,amp:.07,f:1.4,ph:3.3,wd:.05,tw:2.8,al:.26}].forEach(function(r){
+      var N=30,steps=90,W=r.wd*h;
+      for(var s=0;s<N;s++){
+        var u=s/(N-1)-.5;x.beginPath();
+        for(i=0;i<=steps;i++){
+          k=i/steps;var tw=Math.cos(k*Math.PI*r.tw+r.ph*1.3),py=h*r.y+Math.sin(k*Math.PI*r.f*2+r.ph)*h*r.amp+u*W*tw;
+          if(i)x.lineTo(k*w,py);else x.moveTo(0,py);
+        }
+        x.strokeStyle='rgba(240,230,200,'+(r.al*Math.max(.15,1-Math.abs(u)*1.6)/N*4.5)+')';x.lineWidth=Math.max(1,W/N*1.6);x.stroke();
+      }
+    });
+    x.globalCompositeOperation='source-over';
+    var v=x.createRadialGradient(w/2,h*.45,h*.2,w/2,h*.45,w*.75);
+    v.addColorStop(0,'rgba(20,24,12,.28)');v.addColorStop(1,'rgba(20,24,12,.62)');
+    x.fillStyle=v;x.fillRect(0,0,w,h);
+    /* frame with the site's eight-point motif in the corners */
+    function rr(p,r){x.beginPath();x.moveTo(p+r,p);x.arcTo(w-p,p,w-p,h-p,r);x.arcTo(w-p,h-p,p,h-p,r);x.arcTo(p,h-p,p,p,r);x.arcTo(p,p,w-p,p,r);x.closePath()}
+    x.strokeStyle='rgba(239,230,210,.55)';x.lineWidth=2.5;rr(46,30);x.stroke();
+    x.strokeStyle='rgba(239,230,210,.2)';x.lineWidth=1.5;rr(62,20);x.stroke();
+    x.strokeStyle='rgba(239,230,210,.3)';x.lineWidth=1.5;
+    [[118,118],[w-118,118],[118,h-118],[w-118,h-118]].forEach(function(p){
+      x.save();x.translate(p[0],p[1]);x.strokeRect(-22,-22,44,44);x.rotate(Math.PI/4);x.strokeRect(-22,-22,44,44);x.restore();
+      x.beginPath();x.arc(p[0],p[1],7,0,6.283);x.stroke();
+    });
+    x.textAlign='center';x.textBaseline='alphabetic';x.direction='rtl';
+    if(CERT.logo){var lw=250,lh=lw*CERT.logo.naturalHeight/CERT.logo.naturalWidth;x.drawImage(CERT.logo,(w-lw)/2,96,lw,lh)}
+    var tg=x.createLinearGradient(0,360,0,470);tg.addColorStop(0,'#ffffff');tg.addColorStop(1,'#cdbf9f');
+    x.fillStyle=tg;x.font='700 104px '+disp;x.fillText('شهادة فوز',w/2,452);
+    x.fillStyle='rgba(239,230,210,.78)';x.font='400 32px '+sans;
+    x.fillText('يمنح نادي همة لإعداد القادة هذه الشهادة إلى',w/2,532);
+    x.direction='ltr';x.fillStyle='#fffbea';fitText(x,m.email,'500 %px '+sans,50,1180);x.fillText(m.email,w/2,618);
+    x.direction='rtl';
+    x.strokeStyle='rgba(226,196,124,.7)';x.lineWidth=2;x.beginPath();x.moveTo(w/2-330,650);x.lineTo(w/2+330,650);x.stroke();
+    x.fillStyle='#efe6d2';fitText(x,'عضو فريق «'+me.name+'»','700 %px '+disp,58,1200);x.fillText('عضو فريق «'+me.name+'»',w/2,742);
+    x.fillStyle='rgba(239,230,210,.86)';x.font='400 32px '+sans;
+    x.fillText((m.draw?'المتصدّر بالتعادل في':'الفائز في')+' تحدي «قدّها؟» للأمثال والكلمات',w/2,812);
+    var line='بنتيجة '+me.score+' نقطة مقابل '+other.score+' لفريق «'+other.name+'»';
+    fitText(x,line,'400 %px '+sans,30,1200);x.fillText(line,w/2,864);
+    x.fillStyle='rgba(239,230,210,.7)';x.font='400 26px '+sans;
+    x.textAlign='right';x.fillText('التاريخ: '+today(),w-176,h-106);
+    x.textAlign='left';x.fillText('نادي همة لإعداد القادة',176,h-106);
+  }
+  function certImage(m){
+    var c=document.createElement('canvas');c.width=1600;c.height=1131;drawCert(c,m);
+    return c.toDataURL('image/jpeg',.88);
+  }
+  function paintCerts(){
+    var list=$('certList'),has=CERT.members.length>0;
+    list.innerHTML=CERT.members.map(function(m,n){
+      var st={sending:'جارٍ الإرسال…',sent:'أُرسلت',fail:m.err||'تعذّر الإرسال'}[m.state]||'';
+      return '<li class="'+(n===CERT.sel?'sel':'')+'" data-n="'+n+'"><button class="dl" type="button" data-dl="'+n+'">تنزيل</button><span class="st '+(m.state==='sent'?'ok':(m.state==='fail'?'no':''))+'">'+esc(st)+'</span><button class="em" type="button" data-see="'+n+'" aria-label="معاينة شهادة '+esc(m.email)+'">'+esc(m.email)+'</button></li>';
+    }).join('');
+    $('certCanvas').hidden=!has;$('addWrap').hidden=has;
+    var left=CERT.members.filter(function(m){return m.state!=='sent'}).length;
+    $('sendBtn').hidden=!has||!left;$('sendBtn').disabled=CERT.busy;
+    $('sendBtn').textContent=CERT.members.some(function(m){return m.state==='fail'})?'أعد إرسال ما تعذّر':'أرسل الشهادات إلى الإيميلات';
+    if(has)certReady().then(function(){try{drawCert($('certCanvas'),CERT.members[CERT.sel])}catch(e){}});
+  }
+  $('certList').addEventListener('click',function(e){
+    var see=e.target.closest('[data-see]'),dl=e.target.closest('[data-dl]');
+    if(see){CERT.sel=+see.dataset.see;paintCerts()}
+    if(dl){var m=CERT.members[+dl.dataset.dl];certReady().then(function(){
+      try{var a=document.createElement('a');a.href=certImage(m);a.download='himma-certificate-'+m.email.replace(/[^a-z0-9]+/g,'-')+'.jpg';document.body.appendChild(a);a.click();a.remove()}
+      catch(err){toast('تعذّر تجهيز الشهادة للتنزيل')}
+    })}
+  });
+  function winners(){
+    var t=S.duo.teams,draw=t[0].score===t[1].score,out=[];
+    [0,1].forEach(function(k){if(draw||t[k].score>t[1-k].score)t[k].emails.forEach(function(m){out.push({email:m,team:k,draw:draw,state:''})})});
+    return out;
+  }
+  $('addBtn').addEventListener('click',function(){
+    var p=parseMails($('addMails').value),t=S.duo.teams,k=t[0].score>=t[1].score?0:1;
+    if(p.bad.length||!p.good.length){$('certNote').textContent=p.bad.length?('إيميل غير صحيح: '+p.bad.slice(0,2).join('، ')):'اكتب إيميلًا واحدًا على الأقل.';$('certNote').className='hint err';return}
+    if(t[0].score===t[1].score){$('certNote').textContent='النتيجة تعادل، سجّلوا الإيميلات من شاشة تجهيز الفريقين في المواجهة القادمة.';$('certNote').className='hint err';return}
+    t[k].emails=p.good.slice(0,30);CERT.members=winners();CERT.sel=0;$('certNote').textContent='';$('certNote').className='hint';paintCerts();
+  });
+  function note(msg,bad){var n=$('certNote');n.textContent=msg;n.className='hint'+(bad?' err':'')}
+  $('sendBtn').addEventListener('click',function(){
+    if(!ENDPOINT){note('الإرسال بالإيميل غير مفعّل بعد على الموقع. تقدرون تنزّلون كل شهادة من زر «تنزيل» وترسلونها.',true);return}
+    if(!CERT.pin){$('pinWrap').hidden=false;$('pinInput').focus();return}
+    sendAll();
+  });
+  $('pinBtn').addEventListener('click',function(){var v=$('pinInput').value.trim();if(!v)return;CERT.pin=v;$('pinWrap').hidden=true;sendAll()});
+  $('pinInput').addEventListener('keydown',function(e){if(e.key==='Enter'){e.preventDefault();$('pinBtn').click()}});
+  function sendAll(){
+    if(CERT.busy)return;
+    var d=S.duo,queue=CERT.members.filter(function(m){return m.state!=='sent'}),done=0;
+    CERT.busy=true;note('');
+    certReady().then(function step(){
+      var m=queue.shift();
+      if(!m||S.duo!==d){
+        CERT.busy=false;paintCerts();
+        var failed=CERT.members.filter(function(x){return x.state==='fail'}).length,sentN=CERT.members.filter(function(x){return x.state==='sent'}).length;
+        if(S.duo===d)note(failed?('أُرسلت '+sentN+' وتعذّر إرسال '+failed+'. جرّبوا الإعادة أو نزّلوها يدويًا.'):('تم إرسال الشهادات ('+sentN+'). اطلبوا من الأعضاء تفقّد البريد، وقد تصل إلى الرسائل غير المرغوبة.'),failed>0);
+        return;
+      }
+      m.state='sending';m.err='';paintCerts();
+      var img;
+      try{img=certImage(m).split(',')[1]}catch(e){m.state='fail';m.err='تعذّر تجهيز الصورة';return step()}
+      return fetch(ENDPOINT,{method:'POST',redirect:'follow',headers:{'Content-Type':'text/plain;charset=utf-8'},
+        body:JSON.stringify({pin:CERT.pin,email:m.email,team:d.teams[m.team].name,image:img})})
+        .then(function(r){return r.json()})
+        .then(function(j){
+          if(j&&j.ok){m.state='sent';done++;return step()}
+          m.state='fail';m.err=(j&&j.message)||'تعذّر الإرسال';
+          /* a wrong code or an exhausted quota fails for everyone: stop instead of repeating it */
+          if(j&&(j.code==='pin'||j.code==='locked'||j.code==='quota'||j.code==='setup')){
+            if(j.code==='pin'){CERT.pin='';$('pinInput').value='';$('pinWrap').hidden=false}
+            queue.length=0;m.state='';CERT.busy=false;paintCerts();note(m.err,true);
+            if(j.code==='pin')$('pinInput').focus();
+            return;
+          }
+          return step();
+        },function(){m.state='fail';m.err='مشكلة في الاتصال';return step()});
+    });
+  }
+  function duoFinish(){
+    var t=S.duo.teams,draw=t[0].score===t[1].score,w=draw?-1:(t[0].score>t[1].score?0:1);
+    $('duoTitle').innerHTML=draw?'<span class="g">تعادل!</span>':'<span class="g">'+esc(t[w].name)+'</span>';
+    $('duoMsg').textContent=draw?'الفريقان قدّها، وما حسمتها حتى أسئلة الحسم. الشهادة للفريقين.':'كفو! شهادة الفوز لكل عضو في الفريق.';
+    $('duoStats').innerHTML=t.map(function(x,k){
+      return '<li class="'+(k===w?'win':'')+'" style="--tc:var(--t'+(k?'b':'a')+')"><small>'+esc(x.name)+'</small><b>'+x.score+'</b><span>'+x.ok+' صحيحة · '+x.no+' خاطئة</span></li>';
+    }).join('');
+    $('certHead').textContent=draw?'شهادات الفريقين':'شهادات الفريق الفائز';
+    CERT.members=winners();CERT.sel=0;CERT.busy=false;
+    $('pinWrap').hidden=true;$('addMails').value='';note('');
+    paintCerts();
+    show('s-duores',$('duoTitle'));
+    if(!still)fete(40);
+  }
+  $('rematchBtn').addEventListener('click',function(){startDuo(S.duo.teams.map(function(t){return {name:t.name,emails:t.emails}}))});
+  $('duoModesBtn').addEventListener('click',function(){show('s-modes',$('modesTitle'))});
+
   /* a hidden tab should not burn the clock */
   document.addEventListener('visibilitychange',function(){
     if(!S.timer||S.locked||!cur||$('s-play').hidden)return;
